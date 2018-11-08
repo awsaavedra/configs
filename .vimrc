@@ -1,5 +1,6 @@
-syntax on
 "Add the following lines
+syntax on
+set paste
 set smartindent  "sometimes while pasting use :set paste
 set history=1000
 set number                     " enable line numbers
