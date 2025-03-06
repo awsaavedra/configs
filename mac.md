@@ -1,6 +1,6 @@
 
 
-1. Install iTerm
+1. Install iTerm https://iterm2.com/
 
 2. Install zshell https://ohmyz.sh/ 
 
