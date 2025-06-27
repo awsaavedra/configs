@@ -1,3 +1,7 @@
+" https://stackoverflow.com/questions/10964681/enabling-markdown-highlighting-in-vim
+" markdown highlighter for vim
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+
 "Add the following lines
 syntax on
 set paste
