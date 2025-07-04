@@ -1,3 +1,9 @@
+" todo highlighting
+augroup HiglightTODO
+    autocmd!
+    autocmd WinEnter,VimEnter * :silent! call matchadd('Todo', 'TODO', -1)
+augroup END
+
 " https://stackoverflow.com/questions/10964681/enabling-markdown-highlighting-in-vim
 " markdown highlighter for vim
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
