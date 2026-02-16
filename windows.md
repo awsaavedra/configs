@@ -1,5 +1,6 @@
 Purpose: This is the setup for my windows machine for various tasks
 
+0. Dont do it, it's not a development machine
 1. IDEs
     
     Visual Studio Code (VS Code)
