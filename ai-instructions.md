@@ -13,4 +13,4 @@ Always ask clarying questions before writing any code if requirements are ambigu
 
 4. When there's a bug, start by writing a test that reproduces it, then fix it until the tests passes.
 
-5. Every time I correct you, add a new rule to the claude.md file so it never happens again.
+5. Every time I correct you, add a new rule to the ai-basic-instructions.md file so it never happens again.
