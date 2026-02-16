@@ -131,6 +131,12 @@ if [ -f "$SCRIPT_DIR/.bash_profile" ]; then
     echo "  Installed .bash_profile"
 fi
 
+# .tmux.conf
+if [ -f "$SCRIPT_DIR/.tmux.conf" ]; then
+    cp "$SCRIPT_DIR/.tmux.conf" "$HOME/.tmux.conf"
+    echo "  Installed .tmux.conf"
+fi
+
 # Git config (public noreply email)
 git config --global user.name "Alexander Saavedra"
 git config --global user.email "4623144+awsaavedra@users.noreply.github.com"
