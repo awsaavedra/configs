@@ -138,6 +138,15 @@ fi
 # fzf: open selected file in vim on enter
 vf() { local file; file=$(fzf) && vim "$file"; }
 
+# rg+fzf: search regex (case-insensitive) across files, open at matched line in vim
+vr() {
+  local sel file line
+  sel=$(rg -i --line-number --no-heading --color=never "$@" | fzf) || return
+  file=$(echo "$sel" | cut -d: -f1)
+  line=$(echo "$sel" | cut -d: -f2)
+  vim +"$line" "$file"
+}
+
 # --------------------------------------------------
 # Tool-chain sourcing (installed by setup.sh)
 # --------------------------------------------------
