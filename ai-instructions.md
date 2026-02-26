@@ -1,6 +1,6 @@
 # AI Basic Instructions
 
-# 0. Rules to follow while doing all tasks:
+# Rules to follow while doing all tasks:
 
 0. Never reach out to the internet without my permission.
 
