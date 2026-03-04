@@ -137,10 +137,21 @@ if [ -f "$SCRIPT_DIR/.tmux.conf" ]; then
     echo "  Installed .tmux.conf"
 fi
 
-# Git config (public noreply email)
-git config --global user.name "Alexander Saavedra"
-git config --global user.email "4623144+awsaavedra@users.noreply.github.com"
-echo "  Configured git user"
+# tmux pane-color script
+if [ -f "$SCRIPT_DIR/.config/tmux/pane-color.sh" ]; then
+    mkdir -p "$HOME/.config/tmux/themes"
+    cp "$SCRIPT_DIR/.config/tmux/pane-color.sh" "$HOME/.config/tmux/pane-color.sh"
+    chmod +x "$HOME/.config/tmux/pane-color.sh"
+    echo "  Installed .config/tmux/pane-color.sh"
+fi
+
+# TokyoNight Moon tmux theme
+if [ -f "$SCRIPT_DIR/.config/tmux/themes/tokyonight_moon.tmux" ]; then
+    mkdir -p "$HOME/.config/tmux/themes"
+    cp "$SCRIPT_DIR/.config/tmux/themes/tokyonight_moon.tmux" "$HOME/.config/tmux/themes/tokyonight_moon.tmux"
+    echo "  Installed .config/tmux/themes/tokyonight_moon.tmux"
+fi
+
 
 # --------------------------------------------------
 # 7. Done
