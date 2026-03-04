@@ -3,11 +3,10 @@
 
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
-export PATH=$PATH:/Users/Alexander/.local/bin
+export PATH=$PATH:$HOME/.local/bin
 
 alias ls='ls -GFh'
 alias ll='ls -a'
-alias ddu='sh ~/Dropbox/Development/Themes\ WordPress/dobsondev-underscores/ddunderscores-osx.sh'
 
 function prompt {
   local BLACK="\[\033[0;30m\]"
@@ -34,7 +33,3 @@ function prompt {
 
 prompt
 
-# Setting PATH for Python 3.4
-# The orginal version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.4/bin:${PATH}"
-export PATH
