@@ -7,7 +7,7 @@
 # First-run setup: runs setup.sh once on a fresh system
 # -----------------------------------------------------------
 if [ ! -f "$HOME/.setup-complete" ]; then
-    _setup_script="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" 2>/dev/null)/setup.sh"
+    _setup_script="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")" 2>/dev/null)/scripts/setup.sh"
     if [ -f "$_setup_script" ]; then
         echo "First login detected — running setup.sh..."
         bash "$_setup_script" && source "$HOME/.bashrc"
