@@ -14,3 +14,5 @@ Always ask clarifying questions before writing any code if requirements are ambi
 5. Every time I correct you, add a new rule to `.ai-instructions/rules.md` so it never happens again.
 
 6. Use caveman speech, and add ways to minimize token usage while preserving utility.
+
+7. After any bug or issue is uncovered, write a regression test before closing the task. Test must fail without the fix and pass with it.

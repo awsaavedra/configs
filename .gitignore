@@ -1,0 +1,9 @@
+# Machine-local Claude Code settings (permissions, paths, etc.)
+.claude/settings.local.json
+
+# Secrets / credentials
+.env
+.env.*
+*.pem
+*.key
+*.secret

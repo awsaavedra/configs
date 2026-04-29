@@ -75,10 +75,15 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# Print current git branch, or empty string if not in a repo.
+__git_branch() {
+  GIT_OPTIONAL_LOCKS=0 git symbolic-ref --short HEAD 2>/dev/null
+}
+
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$( b=$(__git_branch); [ -n "$b" ] && printf " \[\033[00;33m\](%s)\[\033[00m\]" "$b" )\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$( b=$(__git_branch); [ -n "$b" ] && printf " (%s)" "$b" )\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -91,17 +96,22 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
+# Color support: GNU ls (Linux) uses --color=auto; BSD ls (macOS) uses CLICOLOR from .bash_profile
+case "$(uname -s)" in
+  Linux*)
+    if [ -x /usr/bin/dircolors ]; then
+      test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+      alias ls='ls --color=auto'
+      alias grep='grep --color=auto'
+      alias fgrep='fgrep --color=auto'
+      alias egrep='egrep --color=auto'
+    fi
+    ;;
+  Darwin*)
+    alias ls='ls -F'
     alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+    ;;
+esac
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -157,3 +167,8 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # ~/.local/bin (pip --user, bat/fd symlinks)
 export PATH="$HOME/.local/bin:$PATH"
+
+# NVM (Node Version Manager)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ]             && source "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ]    && source "$NVM_DIR/bash_completion"

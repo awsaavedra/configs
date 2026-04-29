@@ -11,7 +11,10 @@ configs/
 ├── .ai-instructions/rules.md
 ├── .bash_profile
 ├── .bashrc
-├── .config/tmux/          # tmux theme + pane-color script
+├── .claude/
+│   ├── settings.json          # theme, status line (no secrets)
+│   └── statusline-command.sh
+├── .config/tmux/              # tmux theme + pane-color script
 ├── .tmux.conf
 ├── .vimrc
 ├── README.md
@@ -47,7 +50,7 @@ configs/
 3. Adds your user to the `docker` group.
 4. Installs **SDKMAN**, then Java 17 and Kotlin via `sdk install`.
 5. Installs Python packages from `requirements.txt` via `pip3 --user`.
-6. Copies dotfiles (`.bashrc`, `.bash_profile`, `.vimrc`, `.tmux.conf`, tmux theme) into `$HOME`.
+6. Copies dotfiles (`.bashrc`, `.bash_profile`, `.vimrc`, `.tmux.conf`, tmux theme, Claude Code config) into `$HOME`.
 
 ```bash
 bash scripts/setup.sh
@@ -65,6 +68,8 @@ bash scripts/setup.sh
 | `.bash_profile` | Login shell — sources `.bashrc`, sets colored prompt with git branch |
 | `.tmux.conf` | Tmux config (see [Tmux](#tmux)) |
 | `.vimrc` | Vim config (see [Vim](#vim)) |
+| `.claude/settings.json` | Claude Code — dark theme, custom status line |
+| `.claude/statusline-command.sh` | Status line: `user@host:cwd \| model \| ctx%` |
 
 **Key aliases/functions in `.bashrc`:**
 - `ll` / `la` / `l` — ls variants
