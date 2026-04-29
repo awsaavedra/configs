@@ -7,6 +7,7 @@ set -euo pipefail
 
 STAMP="$HOME/.setup-complete"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 if [ -f "$STAMP" ]; then
     echo "Setup already completed. To re-run, delete $STAMP"
@@ -20,7 +21,7 @@ echo "============================================"
 # --------------------------------------------------
 # 1. System packages
 # --------------------------------------------------
-echo "[1/7] Updating apt and installing system packages..."
+echo "[1/8] Updating apt and installing system packages..."
 sudo apt update && sudo apt upgrade -y
 
 sudo apt install -y \
@@ -56,7 +57,7 @@ sudo apt install -y \
 # --------------------------------------------------
 # 2. Symlinks for Debian/Ubuntu naming quirks
 # --------------------------------------------------
-echo "[2/7] Creating symlinks for bat and fd..."
+echo "[2/8] Creating symlinks for bat and fd..."
 mkdir -p "$HOME/.local/bin"
 
 if command -v batcat &>/dev/null && ! command -v bat &>/dev/null; then
@@ -70,7 +71,7 @@ fi
 # --------------------------------------------------
 # 3. Docker — add current user to docker group
 # --------------------------------------------------
-echo "[3/7] Configuring Docker..."
+echo "[3/8] Configuring Docker..."
 if ! groups "$USER" | grep -q docker; then
     sudo usermod -aG docker "$USER"
     echo "  Added $USER to docker group (log out and back in to take effect)."
@@ -79,7 +80,7 @@ fi
 # --------------------------------------------------
 # 4. SDKMAN + Java + Kotlin
 # --------------------------------------------------
-echo "[4/7] Installing SDKMAN, Java 17, and Kotlin..."
+echo "[4/8] Installing SDKMAN, Java 17, and Kotlin..."
 if [ ! -d "$HOME/.sdkman" ]; then
     curl -s "https://get.sdkman.io" | bash
 fi
@@ -100,7 +101,7 @@ fi
 # --------------------------------------------------
 # 5. Python packages
 # --------------------------------------------------
-echo "[5/7] Installing Python packages..."
+echo "[5/8] Installing Python packages..."
 if [ -f "$SCRIPT_DIR/requirements.txt" ]; then
     pip3 install --user -r "$SCRIPT_DIR/requirements.txt"
 else
@@ -111,51 +112,85 @@ fi
 # --------------------------------------------------
 # 6. Config files
 # --------------------------------------------------
-echo "[6/7] Deploying config files..."
+echo "[6/8] Installing NVM, Node.js LTS, and Claude Code..."
+if [ ! -d "$HOME/.nvm" ]; then
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+fi
+export NVM_DIR="$HOME/.nvm"
+# shellcheck source=/dev/null
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+if ! command -v node &>/dev/null; then
+    nvm install --lts
+fi
+if ! command -v claude &>/dev/null; then
+    npm install -g @anthropic-ai/claude-code
+    echo "  Installed Claude Code (run 'claude' to authenticate)"
+fi
+
+# --------------------------------------------------
+# 7. Config files
+# --------------------------------------------------
+echo "[7/8] Deploying config files..."
 
 # .bashrc
-if [ -f "$SCRIPT_DIR/.bashrc" ]; then
-    cp "$SCRIPT_DIR/.bashrc" "$HOME/.bashrc"
+if [ -f "$REPO_DIR/.bashrc" ]; then
+    cp "$REPO_DIR/.bashrc" "$HOME/.bashrc"
     echo "  Installed .bashrc"
 fi
 
 # .vimrc
-if [ -f "$SCRIPT_DIR/.vimrc" ]; then
-    cp "$SCRIPT_DIR/.vimrc" "$HOME/.vimrc"
+if [ -f "$REPO_DIR/.vimrc" ]; then
+    cp "$REPO_DIR/.vimrc" "$HOME/.vimrc"
     echo "  Installed .vimrc"
 fi
 
 # .bash_profile
-if [ -f "$SCRIPT_DIR/.bash_profile" ]; then
-    cp "$SCRIPT_DIR/.bash_profile" "$HOME/.bash_profile"
+if [ -f "$REPO_DIR/.bash_profile" ]; then
+    cp "$REPO_DIR/.bash_profile" "$HOME/.bash_profile"
     echo "  Installed .bash_profile"
 fi
 
 # .tmux.conf
-if [ -f "$SCRIPT_DIR/.tmux.conf" ]; then
-    cp "$SCRIPT_DIR/.tmux.conf" "$HOME/.tmux.conf"
+if [ -f "$REPO_DIR/.tmux.conf" ]; then
+    cp "$REPO_DIR/.tmux.conf" "$HOME/.tmux.conf"
     echo "  Installed .tmux.conf"
 fi
 
 # tmux pane-color script
-if [ -f "$SCRIPT_DIR/.config/tmux/pane-color.sh" ]; then
+if [ -f "$REPO_DIR/.config/tmux/pane-color.sh" ]; then
     mkdir -p "$HOME/.config/tmux/themes"
-    cp "$SCRIPT_DIR/.config/tmux/pane-color.sh" "$HOME/.config/tmux/pane-color.sh"
+    cp "$REPO_DIR/.config/tmux/pane-color.sh" "$HOME/.config/tmux/pane-color.sh"
     chmod +x "$HOME/.config/tmux/pane-color.sh"
     echo "  Installed .config/tmux/pane-color.sh"
 fi
 
 # TokyoNight Moon tmux theme
-if [ -f "$SCRIPT_DIR/.config/tmux/themes/tokyonight_moon.tmux" ]; then
+if [ -f "$REPO_DIR/.config/tmux/themes/tokyonight_moon.tmux" ]; then
     mkdir -p "$HOME/.config/tmux/themes"
-    cp "$SCRIPT_DIR/.config/tmux/themes/tokyonight_moon.tmux" "$HOME/.config/tmux/themes/tokyonight_moon.tmux"
+    cp "$REPO_DIR/.config/tmux/themes/tokyonight_moon.tmux" "$HOME/.config/tmux/themes/tokyonight_moon.tmux"
     echo "  Installed .config/tmux/themes/tokyonight_moon.tmux"
+fi
+
+# Claude Code settings
+if [ -f "$REPO_DIR/.claude/settings.json" ]; then
+    mkdir -p "$HOME/.claude"
+    cp "$REPO_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
+    echo "  Installed .claude/settings.json"
+fi
+
+# Claude Code status line script
+if [ -f "$REPO_DIR/.claude/statusline-command.sh" ]; then
+    mkdir -p "$HOME/.claude"
+    cp "$REPO_DIR/.claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+    chmod +x "$HOME/.claude/statusline-command.sh"
+    echo "  Installed .claude/statusline-command.sh"
 fi
 
 
 # --------------------------------------------------
 # 7. Done
 # --------------------------------------------------
+echo "[8/8] Finalizing..."
 touch "$STAMP"
 
 echo ""
@@ -166,5 +201,6 @@ echo ""
 echo "Notes:"
 echo "  - Log out and back in for the docker group to take effect."
 echo "  - Run 'source ~/.bashrc' to reload your shell config."
-echo "  - SDKMAN and ~/.local/bin are on your PATH via .bashrc."
+echo "  - SDKMAN, NVM, and ~/.local/bin are on your PATH via .bashrc."
+echo "  - Run 'claude' to authenticate Claude Code with your API key."
 echo ""
