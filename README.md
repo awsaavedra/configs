@@ -113,7 +113,10 @@ Config: `.vimrc` — symlinked to `~/.vimrc` by `setup.sh`.
 
 ## AI Instructions
 
-Rules for AI assistants are in [`.ai-instructions/rules.md`](.ai-instructions/rules.md).
+Two things live under [`.ai-instructions/`](.ai-instructions/):
+
+- [`rules.md`](.ai-instructions/rules.md) — cross-cutting behavioral rules I want every AI assistant to follow in any project.
+- [`README.md`](.ai-instructions/README.md) — a **tool-agnostic project structure** for organizing AI context (`AGENTS.md`, `.ai/rules/`, `.ai/commands/`, `.ai/skills/`, `.ai/agents/`, `.ai/hooks/`, `.mcp.json`). Generalized from Claude Code / Cursor / Aider / Codex CLI / Copilot conventions into one shared layout, with a cheatsheet mapping each concept to each tool.
 
 ---
 
