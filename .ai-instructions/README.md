@@ -43,3 +43,19 @@ Where a tool lacks native support, keep the file in `.ai/` anyway — documents 
 ## In this repo
 
 [`rules.md`](rules.md) holds cross-cutting AI rules for every project. The rest is a **template** to apply per-project, not implemented in this dotfiles repo.
+
+## Skills
+
+Reusable Socratic / argumentation / diagnostic skills any AI assistant can invoke. Tool-agnostic — drop into `.ai/skills/` or symlink into `.claude/skills/` per the tool mapping above.
+
+**Argumentation cluster:**
+- [`you-sure`](skills/you-sure/SKILL.md) — AI self-audits a confident claim. Restate, ITT the strongest opposing view, surface load-bearing assumptions, revise. Triggered by `/you-sure` or user pushback ("you sure?", "really?").
+- [`steelyman`](skills/steelyman/SKILL.md) — AI sparring partner for the user's writing/coding/planning/design decisions. ITT the user's view, voice the strongest opposition, hold the position under pushback, fold only when the user gives a real answer. Triggered by `/steelyman` or invitations like "tear this apart."
+- [`double-crux`](skills/double-crux/SKILL.md) — Symmetric productive disagreement. Each side names what evidence would flip their position; locate whether the disagreement is shared crux, crux-mismatch, values-level, framing-level, or empty.
+- [`argumentation-hygiene`](skills/argumentation-hygiene/SKILL.md) — Umbrella reference: good-faith principles (charity, cruxes, bet-grade confidence, surprise as diagnostic, spirit-vs-letter), bad-faith taxonomy (motte-and-bailey, sealioning, gish gallop, etc.), self-audit checks.
+
+**Diagnostic / comprehension cluster:**
+- [`pre-mortem`](skills/pre-mortem/SKILL.md) — Imagine failure before commitment; surface specific failure modes and early-warning signals.
+- [`five-whys`](skills/five-whys/SKILL.md) — Root-cause Socratic for bugs and surprising outcomes. Drill from surface to actionable root, evidence at each level.
+- [`feynman-test`](skills/feynman-test/SKILL.md) — Comprehension audit by simple explanation. The points where you reach for jargon are the points you don't actually understand.
+- [`decision-journal`](skills/decision-journal/SKILL.md) — Record decisions + predictions + confidence for later calibration audit. Practice across time, not in-conversation.
