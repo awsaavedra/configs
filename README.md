@@ -24,19 +24,20 @@ configs/
     └── vm-linux-script-minify.sh
 ```
 
-## Contents
+## Navigation
 
-- [Objective](#objective)
-- [Setup](#setup)
-- [Dotfiles](#dotfiles)
-- [Tmux](#tmux)
-- [Vim](#vim)
-- [AI Instructions](#ai-instructions)
-- [IntelliJ](#intellij)
-- [Mac](#mac)
-- [Windows](#windows)
-- [Potential Tools](#potential-tools)
-- [VM Minify](#vm-minify)
+| Section | What's there |
+|---|---|
+| [Setup](#setup) | Bootstrap script — install everything on a fresh Linux/WSL2 machine |
+| [Dotfiles](#dotfiles) | Shell, prompt, Claude Code config — what each file does and key aliases |
+| [Tmux](#tmux) | Keybindings, TokyoNight theme, Eisenhower Matrix layout |
+| [Vim](#vim) | `.vimrc` location and setup |
+| [AI Instructions](#ai-instructions) | Cross-project AI behavioral rules + tool-agnostic project structure template |
+| [IntelliJ](#intellij) | Key shortcuts reference |
+| [Mac](#mac) | Quick-start checklist (iTerm2, Oh My Zsh, Rectangle, Homebrew) |
+| [Windows](#windows) | VS Code + WSL2 setup notes |
+| [Potential Tools](#potential-tools) | Curated checklist of CLI tools to evaluate (terminal, git, k8s, IaC, and more) |
+| [VM Minify](#vm-minify) | Script to zero/compress a VM image before export |
 
 ---
 
