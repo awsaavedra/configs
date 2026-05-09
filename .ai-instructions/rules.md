@@ -39,6 +39,8 @@
 - [Commit conventions]
 - [Testing expectations]
 - [Ask vs act]
+## Design Principles
+[Key constraints and tradeoffs this project optimizes for, e.g. composable; non-destructive; local-first]
 ## Out of scope
 - [Don't-touch areas]
 - [Manually-maintained files]
