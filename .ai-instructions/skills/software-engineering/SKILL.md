@@ -59,3 +59,4 @@ Rules for command-line interfaces and developer tooling.
 - **Exact paths and decisions.** File paths, architectural choices, removed dependencies — all explicit.
 - **Atomic updates.** Docs update in the same commit as the code change. Never lag.
 - **No historical archaeology.** Remove outdated content; don't append corrections to stale text.
+- **Commit messages:** `#type, what; what; what` — type is the intent (add/fix/doc/refactor/stabilize/edit), clauses are semicolon-separated, no Co-Authored-By.
