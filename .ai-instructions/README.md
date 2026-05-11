@@ -59,3 +59,9 @@ Reusable Socratic / argumentation / diagnostic skills any AI assistant can invok
 - `five-whys` — Root-cause drilling after a real incident. Evidence at each level; stop at the deepest actionable cause.
 - `feynman-test` — Comprehension audit by jargon-free explanation. Points where you reach for technical terms are your gaps.
 - `decision-journal` — Log decisions + predictions + confidence for later calibration audit. Practice across time, not in-conversation.
+
+**[Delegation ladder](skills/delegation/SKILL.md)** — routes work by scope
+- `delegation-ladder` — Decides whether a task belongs at the architecture, pattern, or code level, then hands it to the right agent or handles it inline. Keeps strategic decisions from leaking into implementation and vice versa.
+
+**[Research](skills/research/SKILL.md)** — multi-source investigation with citations
+- `research` — Decomposes a question into sub-queries, searches across papers/docs/repos, cross-validates claims (2+ sources each), and produces a structured report with inline citations and an explicit gaps section. Inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch).
