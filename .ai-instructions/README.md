@@ -46,6 +46,8 @@ Where a tool lacks native support, keep the file in `.ai/` anyway — documents 
 
 ## Skills
 
+**Rule:** All rules must be dual-readable (human + agent) and losslessly compressed to minimum tokens.
+
 Reusable Socratic / argumentation / diagnostic skills any AI assistant can invoke. Tool-agnostic — drop into `.ai/skills/` or symlink into `.claude/skills/` per the tool mapping above. Organized into two cluster files.
 
 **[Argumentation cluster](skills/argumentation/SKILL.md)** — `/argumentation-hygiene`, `/you-sure`, `/steelyman`, `/double-crux`
