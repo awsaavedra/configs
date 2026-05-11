@@ -63,5 +63,8 @@ Reusable Socratic / argumentation / diagnostic skills any AI assistant can invok
 **[Delegation ladder](skills/delegation/SKILL.md)** — routes work by scope
 - `delegation-ladder` — Decides whether a task belongs at the architecture, pattern, or code level, then hands it to the right agent or handles it inline. Keeps strategic decisions from leaking into implementation and vice versa.
 
+**[Software engineering](skills/software-engineering/SKILL.md)** — coding principles cluster
+- `design` — Clean code rules applied automatically: naming, function shape, class design (SRP/DIP), DRY, KISS/YAGNI, fail-fast, smell detection, and the Boy Scout Rule.
+
 **[Research](skills/research/SKILL.md)** — multi-source investigation with citations
 - `research` — Decomposes a question into sub-queries, searches across papers/docs/repos, cross-validates claims (2+ sources each), and produces a structured report with inline citations and an explicit gaps section. Inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch).
