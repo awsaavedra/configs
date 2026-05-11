@@ -67,7 +67,12 @@ Reusable Socratic / argumentation / diagnostic skills any AI assistant can invok
 
 **[Software engineering](skills/software-engineering/SKILL.md)** — coding principles cluster
 - `design` — Clean code rules applied automatically: naming, function shape, class design (SRP/DIP), DRY, KISS/YAGNI, fail-fast, smell detection, and the Boy Scout Rule.
-- `architecture` — Seam-first design: depend on interfaces, inject all external dependencies, keep infrastructure out of the logic layer. Makes vendors swappable and modules independently testable.
+- `architecture` — Seam-first design: depend on interfaces, inject all external dependencies, keep infrastructure out of the logic layer. Lock edge cases before implementation; verify component independence.
+- `cli-devex` — POSIX-compliant, pipeline-friendly CLI rules: stdin/stdout, no interactive prompts, terse/machine-readable output, composable commands, exit codes as contracts.
+- `documentation` — Docs reflect actual implemented state; update atomically with code; exact paths and decisions; no lagging or historical archaeology.
+
+**[Code review](skills/code-review/SKILL.md)** — explicit review workflow
+- `code-review` — Evaluative process distinct from code generation. Audits Design, Architecture, CLI, and Documentation rules; outputs `[FILE:LINE] RULE — fix: action` or `PASS` per item. Prioritized by correctness → seams → DRY/naming → style.
 
 **[Research](skills/research/SKILL.md)** — multi-source investigation with citations
 - `research` — Decomposes a question into sub-queries, searches across papers/docs/repos, cross-validates claims (2+ sources each), and produces a structured report with inline citations and an explicit gaps section. Inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch).
