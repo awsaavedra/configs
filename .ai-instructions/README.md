@@ -74,5 +74,8 @@ Reusable Socratic / argumentation / diagnostic skills any AI assistant can invok
 **[Code review](skills/code-review/SKILL.md)** — explicit review workflow
 - `code-review` — Evaluative process distinct from code generation. Audits Design, Architecture, CLI, and Documentation rules; outputs `[FILE:LINE] RULE — fix: action` or `PASS` per item. Prioritized by correctness → seams → DRY/naming → style.
 
+**[Debug](skills/debug/SKILL.md)** — five-phase bug investigation
+- `debug` — Phased process for bugs, test failures, build failures, performance regressions, memory issues, and concurrency problems. Reproduce → pattern analysis → hypothesize/eliminate → fix at root → verify with fresh evidence. Enforces: no fix without confirmed root cause, no completion claim without verification, eliminate hypotheses rather than confirm them.
+
 **[Research](skills/research/SKILL.md)** — multi-source investigation with citations
 - `research` — Decomposes a question into sub-queries, searches across papers/docs/repos, cross-validates claims (2+ sources each), and produces a structured report with inline citations and an explicit gaps section. Inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch).
