@@ -82,3 +82,13 @@ Reusable Socratic / argumentation / diagnostic skills any AI assistant can invok
 
 **[Research](skills/research/SKILL.md)** — multi-source investigation with citations
 - `research` — Decomposes a question into sub-queries, searches across papers/docs/repos, cross-validates claims (2+ sources each), and produces a structured report with inline citations and an explicit gaps section. Inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch).
+
+### Roadmap
+
+Candidate skills identified as gaps in the current suite. Listed in rough priority order; none drafted yet. Software-engineering and writing-paper workflows are considered covered by the implemented skills above.
+
+1. **Estimation / forecasting** — Heuristics for time / cost / effort estimates: reference class forecasting, anchor-and-adjust, planning fallacy, range vs. point estimates, "the question is wrong" detection. Closes the loop with `decision-journal` — predictions logged there are the kind an estimation skill would help make well.
+2. **Planning / decomposition** — Turn ambiguous goals into structured plans: hierarchical breakdown, dependency mapping, definition-of-done, milestone selection, MoSCoW. Distinct from `delegation-ladder` (which routes existing work).
+3. **Data analysis hygiene** — Sanity checks, base rates, distribution awareness, outlier handling, confounders, Simpson's paradox, signal-vs-noise tests. `research` covers literature; this covers numbers.
+4. **Communication for action** — PRs, RFCs, async status updates with audience-awareness and action-oriented framing. Distinct from `documentation` (which syncs docs with code).
+5. **Prioritization** — ICE / RICE scoring, opportunity cost, "what to NOT do." Could fold into a planning skill or stand alone.
