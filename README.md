@@ -8,13 +8,23 @@ This repository houses all the configurations, dotfiles, and scripts I use acros
 
 ```
 configs/
-├── .ai-instructions/rules.md
+├── .ai-instructions/
+│   ├── README.md
+│   ├── rules.md
+│   └── skills/
+│       ├── argumentation/SKILL.md
+│       ├── code-review/SKILL.md
+│       ├── delegation/SKILL.md
+│       ├── diagnostic/SKILL.md
+│       ├── research/SKILL.md
+│       └── software-engineering/SKILL.md
 ├── .bash_profile
 ├── .bashrc
 ├── .claude/
 │   ├── settings.json          # theme, status line (no secrets)
 │   └── statusline-command.sh
 ├── .config/tmux/              # tmux theme + pane-color script
+├── .gitignore
 ├── .tmux.conf
 ├── .vimrc
 ├── README.md
@@ -32,7 +42,7 @@ configs/
 | [Dotfiles](#dotfiles) | Shell, prompt, Claude Code config — what each file does and key aliases |
 | [Tmux](#tmux) | Keybindings, TokyoNight theme, Eisenhower Matrix layout |
 | [Vim](#vim) | `.vimrc` location and setup |
-| [AI Instructions](#ai-instructions) | Cross-project AI behavioral rules + tool-agnostic project structure template |
+| [AI Instructions](#ai-instructions) | Cross-project AI behavioral rules, tool-agnostic structure template, and reusable skill clusters |
 | [IntelliJ](#intellij) | Key shortcuts reference |
 | [Mac](#mac) | Quick-start checklist (iTerm2, Oh My Zsh, Rectangle, Homebrew) |
 | [Windows](#windows) | VS Code + WSL2 setup notes |
@@ -114,10 +124,11 @@ Config: `.vimrc` — symlinked to `~/.vimrc` by `setup.sh`.
 
 ## AI Instructions
 
-Two things live under [`.ai-instructions/`](.ai-instructions/):
+Three things live under [`.ai-instructions/`](.ai-instructions/):
 
 - [`rules.md`](.ai-instructions/rules.md) — cross-cutting behavioral rules I want every AI assistant to follow in any project.
 - [`README.md`](.ai-instructions/README.md) — a **tool-agnostic project structure** for organizing AI context (`AGENTS.md`, `.ai/rules/`, `.ai/commands/`, `.ai/skills/`, `.ai/agents/`, `.ai/hooks/`, `.mcp.json`). Generalized from Claude Code / Cursor / Aider / Codex CLI / Copilot conventions into one shared layout, with a cheatsheet mapping each concept to each tool.
+- [`skills/`](.ai-instructions/skills/) — six skill clusters (argumentation, diagnostic, delegation, software engineering, code review, research) ready to drop into any project's `.ai/skills/` or `.claude/skills/`.
 
 ---
 

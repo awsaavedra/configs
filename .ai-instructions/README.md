@@ -42,7 +42,7 @@ Where a tool lacks native support, keep the file in `.ai/` anyway — documents 
 
 ## In this repo
 
-[`rules.md`](rules.md) holds cross-cutting AI rules for every project. The rest is a **template** to apply per-project, not implemented in this dotfiles repo.
+[`rules.md`](rules.md) holds cross-cutting AI rules for every project. [`skills/`](skills/) implements the six reusable skill clusters below — drop them into any project's `.ai/skills/` or symlink into `.claude/skills/` per the tool mapping above. The directory layout above is a **template** — apply per-project as needed.
 
 ## Skills
 
