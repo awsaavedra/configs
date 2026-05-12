@@ -1,185 +1,108 @@
 ---
 name: debug
-description: >
-  Use before proposing any fix for bugs, errors, unexpected behavior, test
-  failures, build failures, performance regressions, memory issues, or
-  concurrency problems.
-  Auto-triggers on: "debug this", "fix this bug", "why isn't this working",
-  "value is null", "not updating", "investigate this", "tests failing",
-  "slow", "memory leak", "race condition", "flaky test", "broken build".
+description: Phased bug investigation. Use before proposing any fix for bugs, errors, unexpected behavior, test/build failures, perf/memory regressions, or concurrency issues. Triggers: `/debug` · "debug this" · "fix this bug" · "why isn't this working" · "value is null" · "not updating" · "investigate this" · "tests failing" · "slow" · "memory leak" · "race condition" · "flaky test" · "broken build".
+when_to_use: Any code change responding to a bug or unexpected behavior. Auto-engages on the triggers above.
 ---
 
-# Debug Skill
+# Debug
 
 ## Mode
-Default: autonomous. Args: `/debug` (auto), `/debug ask` (approval-gated).
-- **auto** — invoking the skill IS the approval. Run `/compact`, apply fix, add guard test, modify lint/CI. Only Phase 4 attempt 3+ requires human input (already required below).
-- **ask** — propose mutating actions; user confirms each. Read-only inspection, diagnostic logging, and test runs proceed without prompts in either mode.
+- `/debug` (auto, default) — invocation IS the approval. Run `/compact`, apply fix, add guard test, modify lint/CI without prompting. Phase 4 attempt 3+ still requires human.
+- `/debug ask` — propose mutating actions; user confirms each. Read-only inspection, diagnostic logging, and test runs proceed without prompts in either mode.
 
-## Three Iron Laws
-1. **NO fix without confirmed root cause.** Symptom patches are failure.
-2. **NO completion claim without fresh verification evidence.** "Should work" is not evidence.
-3. **ELIMINATE hypotheses with minimum evidence; never confirm a favorite.** Test to disprove, not to validate.
+## Iron Laws
+1. **No fix without confirmed root cause.** Symptom patches = failure.
+2. **No "done" without fresh verification.** "Should work" ≠ evidence.
+3. **Eliminate, never confirm.** Tests must disprove favorites, not validate them.
 
-## Stop-the-Line Rule
-When ANYTHING unexpected happens:
-- STOP all other changes immediately — errors compound, a bug in step 3 makes steps 4–10 wrong
-- PRESERVE evidence: error output, logs, exact repro steps
-- Follow the phases below in order
-- RESUME only after Phase 5 verification passes
+## Stop-the-Line
+ANY unexpected event → STOP changes (errors compound; bug at step 3 makes 4–10 wrong) · PRESERVE evidence (output, logs, exact repro) · follow phases in order · RESUME only after Phase 5 passes.
 
----
+## Phase 1 — Reproduce & Evidence
+**Read before touching code.** Full error / stack / line numbers / file paths / error codes. State expected vs. actual in one sentence. Check `git diff`, dep bumps, config/env drift, recent deploys.
 
-## Phase 1 — Reproduce & Gather Evidence
+**Repro reliably?**
+- **YES** → Phase 2.
+- **NO** → gather context (logs/env/state) · minimize repro · if timing-dependent: instrument, check races · if still non-repro: document what was ruled out, add appropriate handling (retry/timeout/graceful error), add logging for future, classify as **environment/timing** class bug.
 
-**Read everything before touching code.**
+**Multi-component** (API→service→DB, CI→build→deploy): boundary-log BEFORE any hypothesis — what ENTERS, what EXITS, config/env at each layer. Run once → find where the invariant breaks → investigate ONLY that layer.
 
-- Read the full error, stack trace, or symptom. Note exact line numbers, file paths, error codes.
-- State expected vs. actual behavior in one sentence.
-- Check recent changes: `git diff`, dependency bumps, config/env drift, recent deploys.
+**Secrets / PII — unconditional, both modes.** Never log, print, or diff credential values, tokens, keys, or PII. Compare presence/config only (set/unset, length, source, hash). Redact before any diagnostic output, fixture, or paste. Applies to boundary logging, env diffs, stack traces, and any other output this skill produces.
 
-**Can you reproduce it reliably?**
-```
-YES → Proceed to Phase 2
+**Trace backward.** Bad value deep in stack → walk upstream to origin. Fix at source, not symptom layer.
 
-NO  →
-  ├── Gather more context: logs, environment, system state
-  ├── Reproduce in a minimal/isolated environment
-  ├── If timing-dependent: add timing instrumentation, check for race conditions
-  └── If truly non-reproducible after investigation:
-        → document what was ruled out
-        → implement appropriate handling (retry, timeout, graceful error)
-        → add logging for future investigation
-        → treat as "environment/timing" class bug (see Bug Classes below)
-```
+**Minimal repro.** Smallest code/data/env that still triggers — eliminates false hypotheses, confirms scope.
 
-**Multi-component systems** (API → service → DB, CI → build → deploy):
-Add boundary logging BEFORE forming any hypothesis:
-```
-For EACH component boundary:
-  - Log what data/state ENTERS the component
-  - Log what data/state EXITS the component
-  - Verify config/env at each layer
-Run once → find WHERE the invariant breaks → investigate ONLY that layer.
-```
-
-**Secrets / PII — unconditional, both modes.** Never log, print, or diff credential values, tokens, keys, or PII. Compare presence and config only (set/unset, length, source, hash). Redact before any diagnostic output, test fixture, or shared paste. Applies to boundary logging, env diffs, stack traces, and anything else this skill produces.
-
-**Trace backward.** When an error is deep in the call stack, trace the bad value UPSTREAM to its origin. Fix at the source, not at the symptom layer.
-
-**Create a minimal reproduction.** Reduce the failing case to the smallest code/data/environment that still triggers the bug. This eliminates false hypotheses and confirms scope.
-
-**Long-session checkpoint.** If the debugging session has been running long (many tool calls, large file reads, multiple failed attempts): run `/compact` or equivalent before proceeding. Context degradation after extended sessions causes missed details and repeated mistakes.
-
----
+**Long session.** Many tool calls / large reads / multiple failed attempts → run `/compact` (auto) or propose it (ask) before continuing. Context decay causes missed details and repeated mistakes.
 
 ## Phase 2 — Pattern Analysis
-
-Find the contrast before forming any hypothesis:
-
-1. **Find working examples** — locate similar code in the same codebase that works correctly.
-2. **Read the working version completely** — do not skim.
-3. **List every difference** — however trivial. Never assume "that can't matter."
-4. **Understand dependencies** — what environment, config, state, or timing does the working version have that the broken one doesn't?
-
----
+Contrast before any hypothesis:
+1. **Find a working example** in the same codebase.
+2. **Read it fully** — no skim.
+3. **List every diff** — even trivial. "Can't matter" is wrong.
+4. **Identify the gap** — what env / config / state / timing does the working version have that the broken one doesn't?
 
 ## Phase 3 — Hypothesize & Eliminate
-
-1. Generate 3–5 candidate root causes. List them explicitly.
-2. **Eliminate, don't confirm.** Design the smallest test that would DISPROVE each hypothesis. Test the most falsifiable first, not the most likely.
-3. State ONE active hypothesis explicitly: *"I believe X is the root cause because Y. This test will disprove it if Z."*
-4. If the test doesn't disprove it: move to the next hypothesis. Do NOT layer fixes on top of a prior failed attempt.
-5. If root cause remains unclear — use binary search:
-   - `git bisect` to find the first bad commit
-   - Comment out half the suspected code; confirm if bug disappears
-   - Add/remove config variables one at a time
-   - Narrow until you have a 10-line failing case
-6. Apply 5 Whys once root cause is found: ask "why does this condition exist?" up to 5 times. Stop when you reach a broken process or systemic gap, not just a code line.
-7. **If you don't understand something:** say so. Do not fabricate confidence.
-
----
+1. List 3–5 candidate root causes explicitly.
+2. **Eliminate, don't confirm.** Smallest test that would DISPROVE each. Test most falsifiable first, not most likely.
+3. State one active hypothesis: *"I believe X because Y. This disproves it if Z."*
+4. Not disproved → next hypothesis. Never layer fixes on a failed attempt.
+5. Stuck → binary search: `git bisect` · comment out half of suspected code · toggle config vars one at a time · narrow to a 10-line failing case.
+6. Root cause found → 5 Whys: "why does this condition exist?" up to 5x. Stop at a broken process or systemic gap (not just a code line).
+7. Don't understand something → say so. No fabricated confidence.
 
 ## Phase 4 — Fix
+1. **Failing test first.** Automated preferred; one-off script OK. No test = no fix.
+2. ONE change at root cause. No "while I'm here" refactors.
+3. One sentence: what the fix does + why it addresses the confirmed root cause.
+4. Note edge cases / side effects introduced.
+5. Keep diagnostic logs until Phase 5 passes.
 
-1. **Write a failing test first.** Automated preferred; a one-off script is acceptable. No test = no fix.
-2. Apply ONE change targeting the root cause. No "while I'm here" refactoring.
-3. Explain in one sentence: what the fix does and why it addresses the confirmed root cause.
-4. Note edge cases or side effects introduced.
-5. **Do not remove diagnostic logs until Phase 5 is complete.**
-
-**Fix attempt limit:**
-```
-Attempts 1–2: Return to Phase 1 with new information.
-Attempt 3+:   STOP — this is likely an architectural problem.
-  Signs: each fix exposes new coupling elsewhere; fixes require massive
-         changes; each attempt creates new symptoms.
-  → Discuss with a human before attempting another fix.
-```
-
----
+**Attempt limit.** 1–2 fail → return to Phase 1 with new info. 3+ → STOP, likely architectural (each fix exposes new coupling · requires massive change · creates new symptoms). Discuss with a human before another attempt.
 
 ## Phase 5 — Verify & Guard
+**Verification Gate** (mandatory before any "done" claim):
+1. **IDENTIFY** the exact command that proves fixed (test suite / build / linter / manual step).
+2. **RUN** the full command fresh — no cached, no assumed results.
+3. **READ** full output, exit code, failure count.
+4. **CONFIRM** — output doesn't show pass → state actual status with evidence, return to Phase 3/4. Pass → state the claim with the pasted output.
+5. Only then: declare fixed.
 
-### Verification Gate (mandatory before any "done" claim)
-```
-1. IDENTIFY: What exact command proves this is fixed?
-             (test suite, build, linter, manual step)
-2. RUN:      Execute the FULL command fresh — no cached or assumed results.
-3. READ:     Full output. Check exit code. Count failures.
-4. CONFIRM:
-   Output does NOT confirm → state actual status with evidence, return to Phase 3/4
-   Output DOES confirm     → state claim WITH evidence (paste relevant output)
-5. ONLY THEN: Declare it fixed.
-```
+**Regression check.** Full test suite; count failures before/after; zero new failures required. Verify no adjacent functionality broke. Remove diagnostic logs.
 
-### Regression Check
-- Run the full existing test suite. Count failures before and after. Zero new failures required.
-- Verify no adjacent functionality was affected.
-- Remove diagnostic logs now that fix is confirmed.
+**Guard against recurrence.** Permanently add the Phase 4 test if not already in the suite. If the class can recur: add a lint rule / assertion / CI gate. Document: *"Root cause was X. Future protection: Y."*
 
-### Guard Against Recurrence
-- Permanently add the Phase 4 test to the test suite if not already there.
-- If this bug class can recur: add a lint rule, assertion, or CI gate that would catch it automatically.
-- Document: *"Root cause was X. Future protection: Y."*
-
----
-
-## Bug Classes — Detection Signals
+## Bug Classes
 
 | Class | Signals | Approach |
 |---|---|---|
-| **Logic** | Wrong output, wrong state, wrong control flow | Standard 5-phase process |
-| **Performance / Memory** | Increasing memory over time, slow under load, CPU spikes | Profile BEFORE hypothesizing; establish measurement baseline first |
-| **Concurrency / Race** | Intermittent failures, order-dependent results, "works locally", data corruption under load | Assume shared mutable state; look for missing locks, unawaited async, missing cleanup |
-| **Environment / Config** | Works locally, fails in CI/staging/prod | Diff environments explicitly: env vars, versions, credential presence/config (never values), network rules, file paths |
-| **Flaky Tests** | Passes/fails non-deterministically | Treat as real bugs; do NOT re-run until green; find the non-determinism (timing, test ordering, shared state) |
+| **Logic** | Wrong output / state / control flow | Standard 5-phase |
+| **Perf / Memory** | Memory grows over time · slow under load · CPU spikes | Profile BEFORE hypothesizing; establish baseline first |
+| **Concurrency / Race** | Intermittent · order-dependent · "works locally" · corruption under load | Assume shared mutable state; check locks, unawaited async, missing cleanup |
+| **Env / Config** | Works locally, fails in CI/stage/prod | Diff env vars · versions · credential presence/config (never values) · network rules · file paths |
+| **Flaky Tests** | Non-deterministic pass/fail | Real bugs — do NOT re-run until green. Find the non-determinism (timing, test order, shared state) |
 
----
+## Red Flags — STOP, back to Phase 1
 
-## Red Flags — STOP and Return to Phase 1
-
-| If you catch yourself thinking… | Reality |
+| Thought | Reality |
 |---|---|
-| "Quick fix for now, investigate later" | You will never investigate later |
-| "It's probably X, let me fix that" | Probability isn't evidence — disprove it |
-| "Multiple changes at once to save time" | Can't isolate what worked; causes new bugs |
-| "I'll write the test after the fix" | Untested fixes don't stick |
-| "Issue seems simple, skip the process" | Simple bugs have root causes too |
-| "I don't fully understand but this might work" | It won't. Return to Phase 1 |
-| "One more fix attempt" after 2+ failures | Architectural problem — stop |
-| "Should work", "probably passes", "seems fine" | Not evidence. Run the verification gate |
-| "Great!", "Done!", "Fixed!" without pasting output | Run the gate first |
-| "I found the root cause" without a 5 Whys check | Ask why that condition exists |
-
----
+| "Quick fix now, investigate later" | You won't |
+| "Probably X — let me fix that" | Probability ≠ evidence — disprove it |
+| "Multi-change to save time" | Can't isolate what worked; causes new bugs |
+| "Test after the fix" | Untested fixes don't stick |
+| "Simple, skip the process" | Simple bugs have root causes too |
+| "Don't fully get it but might work" | It won't. Phase 1 |
+| "One more attempt" after 2+ fails | Architectural — stop |
+| "Should work / probably / seems fine" | Not evidence — run the gate |
+| "Done! / Fixed!" without pasted output | Gate first |
+| "Found root cause" with no 5 Whys | Ask why that condition exists |
 
 ## Quick Reference
 
-| Phase | Gate (cannot skip) | Done when… |
+| Phase | Gate | Done when… |
 |---|---|---|
-| 1. Reproduce & Evidence | Must complete before Phase 2 | Can trigger reliably OR classified as environment/timing bug; session compacted if needed |
-| 2. Pattern Analysis | Must complete before Phase 3 | Know what differs from working code |
-| 3. Hypothesize & Eliminate | Must complete before Phase 4 | Root cause confirmed by elimination + 5 Whys applied |
-| 4. Fix | Failing test written first | One change at root cause level |
-| 5. Verify & Guard | Fresh command output required | Target passes, zero new failures, guard added, logs cleaned |
+| 1. Repro & Evidence | Must precede Phase 2 | Reliable repro OR classified env/timing; compacted if needed |
+| 2. Pattern | Must precede Phase 3 | Know what differs from working code |
+| 3. Hypothesize | Must precede Phase 4 | Root cause confirmed by elimination + 5 Whys applied |
+| 4. Fix | Failing test first | One change at root level |
+| 5. Verify & Guard | Fresh command output required | Target passes (with pasted output) · zero new failures · guard added · logs cleaned |
