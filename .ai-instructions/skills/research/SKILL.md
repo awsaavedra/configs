@@ -6,25 +6,16 @@ when_to_use: Any topic investigation, tool comparison, literature review, or evi
 
 # Research
 
-```
-DECOMPOSE → SEARCH → VALIDATE → SYNTHESIZE → GAP-CHECK
-```
+**Pipeline.** decompose → search → validate → synthesize → gap-check.
 
-```
-decompose   query → sub-questions
-search      3–5 queries each; papers > docs > repos > blogs
-validate    2+ sources/claim; conflict → report both
-synthesize  structured report, every fact cited inline
-gap-check   list what could not be verified
-```
+- **decompose** — query → sub-questions
+- **search** — 3–5 queries each; papers > docs > repos > blogs
+- **validate** — 2+ sources/claim; conflict → report both
+- **synthesize** — structured report, every fact cited inline
+- **gap-check** — list what could not be verified
 
 ## Rules
-```
-think first   plan before querying
-verify        no unsourced assertions
-increment     refine from results, don't batch-blast
-no fabrication  missing → say so; never invent stats/dates/quotes
-```
+Think first (plan before querying) · verify (no unsourced assertions) · increment (refine from results, don't batch-blast) · no fabrication (missing → say so; never invent stats/dates/quotes).
 
 ## Search Patterns
 ```
@@ -48,23 +39,9 @@ Short keyword queries only. Split multi-entity queries.
 ```
 
 ## Gates
-```
-[ ] every stat cited
-[ ] conflicts not co-asserted as fact
-[ ] recs derived from findings not priors
-[ ] gaps populated
-```
+Every stat cited · conflicts not co-asserted as fact · recs derived from findings (not priors) · gaps populated.
 
 ## Depth
-```
-quick    3–5 sources
-standard 8–12 sources  ← default
-deep     15+ sources
-```
+Quick (3–5 sources) · **standard (8–12, default)** · deep (15+).
 
-## Triggers
-> research · compare · benchmark · literature review · best X for · landscape of · what does evidence say
-
----
-
-> Source material: https://github.com/karpathy/autoresearch
+> Source: [karpathy/autoresearch](https://github.com/karpathy/autoresearch)
