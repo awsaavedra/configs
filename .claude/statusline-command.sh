@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Claude Code status line – git branch | model | ctx usage
-# Uses Python (not jq) since jq is not installed in this environment.
 
 input=$(cat)
 
