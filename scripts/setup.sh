@@ -110,7 +110,7 @@ else
 fi
 
 # --------------------------------------------------
-# 6. Config files
+# 6. NVM + Node.js + Claude Code
 # --------------------------------------------------
 echo "[6/8] Installing NVM, Node.js LTS, and Claude Code..."
 if [ ! -d "$HOME/.nvm" ]; then
