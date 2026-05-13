@@ -3,6 +3,14 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
 # -----------------------------------------------------------
 # First-run setup: runs setup.sh once on a fresh system
 # -----------------------------------------------------------
@@ -16,14 +24,6 @@ if [ ! -f "$HOME/.setup-complete" ]; then
     unset _setup_script
 fi
 
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
-
 #No browser
 alias jupyter-notebook="~/.local/bin/jupyter-notebook --no-browser"
 
@@ -36,7 +36,7 @@ shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000
-HISTFILESIZE=2000
+HISTFILESIZE=10000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.

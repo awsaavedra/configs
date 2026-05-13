@@ -10,8 +10,8 @@ au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 
 "Add the following lines
 syntax on
-set paste
-set smartindent  "sometimes while pasting use :set paste
+set smartindent
+set pastetoggle=<F2>  " toggle paste mode to suppress auto-indent when pasting
 set history=1000
 set number                     " enable line numbers
 set ruler
@@ -42,7 +42,6 @@ set laststatus=2
 
 "work together to highlight search results (as you type)
 set incsearch
-set showmatch
 set hlsearch
 
 "If you search for an all-lowercase string your search will be case-insensitive,
@@ -55,4 +54,3 @@ set smartcase
 set wrap
 set textwidth=80
 set formatoptions=qrn1
-set colorcolumn=80
