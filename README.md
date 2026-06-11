@@ -1,109 +1,120 @@
 # configs
 
-Personal dotfiles and dev environment bootstrap for Linux/WSL2.
+## Project
 
-## Objective
+Personal dotfiles, a fresh-machine bootstrap, and a portable AI-instruction layer for Linux/WSL2. Single user; cloned onto a new machine, the scripts apply everything locally — read-only reference for the outside world.
 
-Storage repo for personal configurations. Cloned onto a fresh machine, scripts apply locally — that's the entire workflow. Not a deployable product, not a library consumed by other projects, not application code. Pluck-as-needed: copy a dotfile, drop a skill into another project's `.ai/skills/`, run the bootstrap. Everything here is read-only reference for the outside world.
+## Quickstart
+
+```bash
+git clone <this-repo> configs && cd configs
+bash scripts/setup.sh                          # bootstrap a fresh Linux/WSL2 machine (idempotent)
+bash scripts/port-skills.sh /path/to/project   # optional: drop the AI skills + rules into another project
+```
+
+## Stack
+
+Bash · Vim · Tmux · Markdown. Target: Linux/WSL2 (Mac/Windows notes under [Reference](#reference)). No runtime, build graph, or dependencies — these are config files applied in place. `setup.sh` installs the surrounding toolchain: git, fzf, ripgrep, fd, bat, jq, docker, Python 3, SDKMAN (Java 17 + Kotlin), NVM/Node, Claude Code.
+
+## Commands
+
+- Bootstrap: `bash scripts/setup.sh` — idempotent; `~/.setup-complete` stamp gates re-runs (delete it to re-run).
+- Port AI layer: `bash scripts/port-skills.sh [--tool claude|ai|cursor] [--skills-only] [--dry-run] [-q] TARGET_DIR` — see [Reference](#reference).
+- Slim a VM image: `sudo bash scripts/vm-linux-script-minify.sh` — run as root inside the VM before export.
+- Build / Test / Lint / Type-check: none — config repo. Validation is reading the file; lint non-trivial bash with `shellcheck`.
+
+## Architecture
 
 ```
 configs/
-├── .ai-instructions/
-│   ├── README.md
-│   ├── rules.md
-│   └── skills/
-│       ├── argumentation/SKILL.md
-│       ├── code-review/SKILL.md
-│       ├── debug/SKILL.md
-│       ├── delegation/SKILL.md
-│       ├── diagnostic/SKILL.md
-│       ├── research/SKILL.md
-│       ├── security/SKILL.md
-│       └── software-engineering/SKILL.md
-├── .bash_profile
-├── .bashrc
-├── .claude/
-│   ├── settings.json          # theme, status line (no secrets)
-│   └── statusline-command.sh
-├── .config/tmux/              # tmux theme + pane-color script
-├── .gitignore
-├── .tmux.conf
-├── .vimrc
-├── CLAUDE.md                 # session context for Claude Code
-├── README.md
-├── TODO-tools.md             # backlog of CLI tools to evaluate
-└── scripts/
-    ├── port-skills.sh         # copy skills + rules into another project
-    ├── requirements.txt
-    ├── setup.sh
-    └── vm-linux-script-minify.sh
+├── .ai-instructions/          # portable, cross-project AI layer
+│   ├── README.md              #   tool-agnostic structure template + skill catalog
+│   ├── rules.md               #   behavioral rules for any AI assistant, any project
+│   └── skills/                #   reusable SKILL.md clusters (losslessly compressed)
+├── scripts/
+│   ├── setup.sh               # idempotent fresh-machine bootstrap
+│   ├── port-skills.sh         # copy the AI layer into another project (auto-detects its tool)
+│   ├── vm-linux-script-minify.sh  # zero/compress a VM image before export
+│   └── requirements.txt       # Python packages installed by setup
+├── .bashrc / .bash_profile    # interactive + login shell — aliases, vf/vr, git-branch prompt, PATH
+├── .vimrc                     # vim config
+├── .tmux.conf / .config/tmux/ # tmux config + TokyoNight Moon theme + pane colors + Eisenhower layout
+├── .claude/                   # Claude Code settings + status line (no secrets)
+├── CLAUDE.md                  # session context for Claude Code
+└── TODO-tools.md              # backlog of CLI tools to evaluate (not installed by the bootstrap)
 ```
 
-## Navigation
+The `skills/` subdirectory is the portable unit — pluck a `SKILL.md` into another project's `.ai/skills/` or `.claude/skills/`, or use `port-skills.sh` to copy the whole layer.
 
-| Section | What's there |
-|---|---|
-| [Setup](#setup) | Bootstrap script — install everything on a fresh Linux/WSL2 machine |
-| [Dotfiles](#dotfiles) | Shell, prompt, Claude Code config — what each file does and key aliases |
-| [Tmux](#tmux) | Keybindings, TokyoNight theme, Eisenhower Matrix layout |
-| [Vim](#vim) | `.vimrc` location and setup |
-| [AI Instructions](#ai-instructions) | Cross-project AI behavioral rules, tool-agnostic structure template, and reusable skill clusters |
-| [Porting](#porting) | One command to copy the skills + rules into another project |
-| [IntelliJ](#intellij) | Key shortcuts reference |
-| [Mac](#mac) | Quick-start checklist (iTerm2, Oh My Zsh, Rectangle, Homebrew) |
-| [Windows](#windows) | VS Code + WSL2 setup notes |
-| [TODO-tools.md](TODO-tools.md) | Curated checklist of CLI tools to evaluate (terminal, git, k8s, IaC, and more) |
-| [VM Minify](#vm-minify) | Script to zero/compress a VM image before export |
+## Rules
+
+- **Atomic docs.** Update `README.md` / `.ai-instructions/README.md` in the same commit as the thing they describe.
+- **No volatile enumerations.** No counts or exhaustive lists of growing collections (e.g. the skill set) — they go stale silently.
+- **Compressed skills.** `SKILL.md` files use separator-style inline lists, no prose padding; match the existing style.
+- **No internet without permission** (`.ai-instructions/rules.md` rule 0); secrets never enter the repo.
+- IMPORTANT: this is a storage repo, not application code — most changes are single-file dotfile/`SKILL.md` tweaks. Don't add build systems, frameworks, or a test harness.
+
+## Workflow
+
+- **Approach.** Smallest change that works; match surrounding style. Describe the approach and ask before large or lossy changes; small dotfile tweaks act directly.
+- **Commits.** `#type, what; what; what` — type ∈ `add`/`fix`/`doc`/`refactor`/`stabilize`/`edit`, clauses semicolon-separated. No Co-Authored-By trailer.
+- **Testing.** Reason about shell/vim/markdown correctness by reading; functionally test scripts (e.g. `port-skills.sh`) against throwaway temp dirs.
+
+## Design Principles
+
+Pluck-as-needed · tool-agnostic (the AI layer maps onto Claude Code / Cursor / Codex / Copilot) · idempotent (`setup.sh` and `port-skills.sh` re-run safely) · local-first and non-destructive (writes only where told; stamp files and self-port guards prevent surprises) · read-only reference for the outside world.
+
+## Out of scope
+
+- Not a deployable product, library, or application code.
+- Secrets — `.claude/settings.json` carries theme/status-line only; never commit credentials.
+- `.bashrc` / `.vimrc` / tmux config are personal — fork and adjust, not general-purpose defaults.
+- `TODO-tools.md` is a backlog under evaluation, not an install manifest.
 
 ---
 
-## Setup
+## Reference
 
-`setup.sh` bootstraps a fresh Linux/WSL2 machine. Idempotent — leaves a `~/.setup-complete` stamp so it only runs once (delete the stamp to re-run).
+### Setup details
 
-**What it does:**
-1. `apt install` — build-essential, curl, git, vim, tmux, fzf, ripgrep, fd-find, bat, htop, jq, docker, python3, java toolchain (hugo, maven, gradle), etc.
-2. Creates `~/.local/bin` symlinks for `bat` and `fd` (Debian renames them `batcat`/`fdfind`).
-3. Adds your user to the `docker` group.
-4. Installs **SDKMAN**, then Java 17 and Kotlin via `sdk install`.
-5. Installs Python packages from `requirements.txt` via `pip3 --user`.
+`setup.sh` (idempotent):
+
+1. `apt install` — build-essential, curl, git, vim, tmux, fzf, ripgrep, fd-find, bat, htop, jq, docker, python3, and a Java toolchain (hugo, maven, gradle).
+2. `~/.local/bin` symlinks for `bat` and `fd` (Debian ships them as `batcat`/`fdfind`).
+3. Adds the current user to the `docker` group.
+4. Installs SDKMAN, then Java 17 and Kotlin via `sdk install`.
+5. Installs Python packages from `requirements.txt` via `pip3 --user` (numpy/pandas/matplotlib, PyTorch, HuggingFace Transformers, LlamaIndex stack, Jupyter, Flask, pytest).
 6. Copies dotfiles (`.bashrc`, `.bash_profile`, `.vimrc`, `.tmux.conf`, tmux theme, Claude Code config) into `$HOME`.
 
-```bash
-bash scripts/setup.sh
-```
+`.bashrc` auto-runs `setup.sh` on first interactive login when `~/.setup-complete` is absent.
 
-`scripts/requirements.txt` covers: numpy/pandas/matplotlib, PyTorch, HuggingFace Transformers, LlamaIndex stack, Jupyter, Flask, pytest.
-
----
-
-## Dotfiles
+### Dotfiles
 
 | File | Purpose |
 |---|---|
 | `.bashrc` | Interactive shell — history, aliases, `vf`/`vr` functions, SDKMAN, PATH |
-| `.bash_profile` | Login shell — sources `.bashrc`, sets colored prompt with git branch |
-| `.tmux.conf` | Tmux config (see [Tmux](#tmux)) |
-| `.vimrc` | Vim config (see [Vim](#vim)) |
+| `.bash_profile` | Login shell — sources `.bashrc`, sets colored `user @ dir (git-branch)` prompt |
 | `.claude/settings.json` | Claude Code — dark theme, custom status line |
 | `.claude/statusline-command.sh` | Status line: `user@host:cwd \| model \| ctx%` |
 
-**Key aliases/functions in `.bashrc`:**
-- `ll` / `la` / `l` — ls variants
-- `vf` — fzf-pick a file and open in vim
-- `vr <regex>` — ripgrep search, fzf-select result, open at matched line in vim
+Key aliases/functions: `ll`/`la`/`l` (ls variants) · `vf` (fzf-pick a file, open in vim) · `vr <regex>` (ripgrep → fzf-select → open at the matched line).
 
-`.bash_profile` sets a colored prompt: `user @ dir (git-branch)`.
+### Porting (`port-skills.sh`)
 
-`.bashrc` auto-runs `setup.sh` on first login if `~/.setup-complete` doesn't exist.
+Copies every skill cluster under `.ai-instructions/skills/` plus `rules.md` into a target project, auto-detecting its AI tool:
 
----
+| Target has | Skills land in | Rules land in |
+|---|---|---|
+| `.claude/` | `.claude/skills/` | managed block in `CLAUDE.md` |
+| `.cursor/` | `.ai/skills/` | `.cursor/rules/configs.mdc` |
+| `AGENTS.md` or `.ai/` | `.ai/skills/` | managed block in `AGENTS.md` |
+| none of the above | `.ai/skills/` | managed block in `AGENTS.md` |
 
-## Tmux
+Idempotent — re-run to re-sync; reports `created`/`updated`/`unchanged` per file and never duplicates the rules block. Flags: `--tool` forces a layout, `--skills-only` skips rules, `--dry-run` previews, `-q` quiets. Exit codes: 0 ok · 1 usage · 2 target missing · 3 source missing.
 
-Config: `.tmux.conf` + `.config/tmux/`
+### Tmux
 
-**Prefix:** `C-a` (remapped from `C-b`)
+Config: `.tmux.conf` + `.config/tmux/`. **Prefix:** `C-a` (remapped from `C-b`).
 
 | Binding | Action |
 |---|---|
@@ -114,56 +125,13 @@ Config: `.tmux.conf` + `.config/tmux/`
 | `C-a E` | Open Eisenhower Matrix layout |
 | `C-h/j/k/l` | Navigate panes (no prefix) |
 
-**Theme:** TokyoNight Moon (`.config/tmux/themes/tokyonight_moon.tmux`)
+**Theme:** TokyoNight Moon (`.config/tmux/themes/tokyonight_moon.tmux`). **Pane colors:** `.config/tmux/pane-color.sh` assigns a rotating dark hue per pane ID (Eisenhower windows manage their own). **Eisenhower Matrix** (`C-a E`): a 2×2 tiled window — Do (green), Decide (blue), Delegate (rose), Delete (grey).
 
-**Pane colors:** `.config/tmux/pane-color.sh` assigns a rotating dark hue (sage, teal, rose, lavender, etc.) to each new pane based on pane ID. Eisenhower windows manage their own colors.
+### Vim
 
-**Eisenhower Matrix** (`C-a E`): Opens a 2×2 tiled window with color-coded quadrants — Do (green), Decide (blue), Delegate (rose), Delete (grey).
+`.vimrc` — symlinked to `~/.vimrc` by `setup.sh`.
 
----
-
-## Vim
-
-Config: `.vimrc` — symlinked to `~/.vimrc` by `setup.sh`.
-
----
-
-## AI Instructions
-
-Three things live under [`.ai-instructions/`](.ai-instructions/):
-
-- [`rules.md`](.ai-instructions/rules.md) — cross-cutting behavioral rules I want every AI assistant to follow in any project.
-- [`README.md`](.ai-instructions/README.md) — a **tool-agnostic project structure** for organizing AI context (`AGENTS.md`, `.ai/rules/`, `.ai/commands/`, `.ai/skills/`, `.ai/agents/`, `.ai/hooks/`, `.mcp.json`). Generalized from Claude Code / Cursor / Aider / Codex CLI / Copilot conventions into one shared layout, with a cheatsheet mapping each concept to each tool.
-- [`skills/`](.ai-instructions/skills/) — reusable skill clusters ready to drop into any project's `.ai/skills/` or `.claude/skills/`.
-
-To copy them automatically, see [Porting](#porting).
-
----
-
-## Porting
-
-Drop this repo's AI-instruction layer (every skill cluster under `.ai-instructions/skills/` + `rules.md`) into another project with one command:
-
-```bash
-bash scripts/port-skills.sh /path/to/your/project
-```
-
-It auto-detects the target's AI tool and places files where that tool expects them:
-
-| Target has | Skills land in | Rules land in |
-|---|---|---|
-| `.claude/` | `.claude/skills/` | managed block in `CLAUDE.md` |
-| `.cursor/` | `.ai/skills/` | `.cursor/rules/configs.mdc` |
-| `AGENTS.md` or `.ai/` | `.ai/skills/` | managed block in `AGENTS.md` |
-| none of the above | `.ai/skills/` | managed block in `AGENTS.md` |
-
-Idempotent — re-run to re-sync; it reports `created` / `updated` / `unchanged` per file and never duplicates the rules block. Flags: `--tool claude|ai|cursor` forces a layout, `--skills-only` skips rules, `--dry-run` previews, `-q` quiets output. Run with `--help` for details.
-
----
-
-## IntelliJ
-
-Key shortcuts:
+### IntelliJ
 
 | Shortcut | Action |
 |---|---|
@@ -182,35 +150,14 @@ Key shortcuts:
 
 Notable features: distraction-free mode, dependency analysis, zero-latency typing.
 
----
+### Mac
 
-## Mac
+Quick setup checklist: [iTerm2](https://iterm2.com/) · [Oh My Zsh](https://ohmyz.sh/) · [Rectangle](https://rectangleapp.com/) (window management) · [Homebrew](https://brew.sh/) · vim.
 
-Quick setup checklist:
+### Windows
 
-1. [iTerm2](https://iterm2.com/)
-2. [Oh My Zsh](https://ohmyz.sh/)
-3. [Rectangle](https://rectangleapp.com/) — window management
-4. [Homebrew](https://brew.sh/)
-5. vim
+Not a primary dev machine. **VS Code** with language extensions, vim keybindings, Markdown, Docker, and Python/data-science plugins (consider Cursor). **WSL2** for Linux tooling, integrated with VS Code remote. VirtualBox VMs for heavier isolation.
 
----
+### TODO-tools
 
-## Windows
-
-Windows is not a primary dev machine.
-
-- **VS Code** with: language extensions, vim keybindings, Markdown, Docker, Python/data science plugins. Consider Cursor.
-- **WSL2** — run Linux tooling inside Windows; integrate with VS Code remote.
-- VM environments (VirtualBox) for heavier isolation.
-
----
-
-## VM Minify
-
-`scripts/vm-linux-script-minify.sh` — stops all services (apache2, jenkins, jira, mysql, mongodb, etc.), prunes Docker completely, cleans apt caches, removes swap, zeroes free disk space, and prepares the VM image for export/transport.
-
-```bash
-# Run as root inside the VM before exporting
-sudo bash scripts/vm-linux-script-minify.sh
-```
+[`TODO-tools.md`](TODO-tools.md) — curated checklist of CLI tools to evaluate (terminal, git, k8s, IaC, and more). Candidates, not commitments; nothing there is installed by the bootstrap.
