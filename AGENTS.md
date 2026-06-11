@@ -16,7 +16,7 @@ Storage repo for personal configurations — dotfiles, AI instruction templates,
 ## Where things live
 
 - `.ai/` — tool-agnostic AI layer: cross-project rules (`rules.md`) + reusable skill clusters (`skills/`). The `skills/` subdirectory is meant to be plucked into other projects' `.ai/skills/` or `.claude/skills/`.
-- `scripts/port-skills.sh` — copies `.ai/` (skills + `rules.md`) into another project, auto-detecting its AI tool (`.claude/` / `.cursor/` / `.ai/`). Idempotent; writes only inside the target. This is what "port all skills into my project" resolves to.
+- `scripts/port.sh` — one command to port selected skills / dotfile configs / a CLI-tool installer into another project, auto-detecting its AI tool (`.claude/` / `.cursor/` / `.ai/`). Idempotent; writes only inside the target. This is what "port … into my project" resolves to.
 - `scripts/setup.sh` — idempotent bootstrap; stamp file at `~/.setup-complete` prevents re-runs.
 - `.bashrc`, `.bash_profile`, `.vimrc`, `.tmux.conf`, `.config/tmux/`, `claude/` — dotfile sources copied into `$HOME` by setup.sh. `claude/` holds the deliberate Claude Code config (`settings.json` + `statusline-command.sh`) deployed to `~/.claude/`.
 - Per-CLI harness dirs (`.claude/`, `.cursor/`, `.copilot/`, …) and the generated `CLAUDE.md` adapter are gitignored — they hold tool-specific session data, transcripts, and credentials and must never be committed (PII protection; see `.gitignore`). The portable, CLI-agnostic layer is `.ai/` + `AGENTS.md`; setup.sh regenerates the local `CLAUDE.md` pointer on a fresh clone.
