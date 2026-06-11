@@ -1,6 +1,6 @@
 ---
 name: security
-description: Multi-scope security review (code, agents, infrastructure, threat models). Read-only by default; Write only on explicit file-output request. Triggers: `/security [scope]` · "security review" · "audit for vulnerabilities" · "threat model this" · "is this safe" · "OWASP/STRIDE review".
+description: Multi-scope security review (code, agents, infrastructure, threat models). Read-only (Read/Grep) — emits findings as text; never edits files or expands its own tools without an explicit, reviewed grant. Triggers: `/security [scope]` · "security review" · "audit for vulnerabilities" · "threat model this" · "is this safe" · "OWASP/STRIDE review".
 when_to_use: Explicitly invoked on existing artifacts. Evaluative, not always-on. Distinct from writing code or generating threat content.
 allowed-tools: ["Read", "Grep"]
 argument-hint: "[scope: code | agent | infra | threat-model | full]"
