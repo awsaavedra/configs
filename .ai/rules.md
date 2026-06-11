@@ -41,6 +41,14 @@
 - [Ask vs act]
 ## Design Principles
 [Key constraints and tradeoffs this project optimizes for, e.g. composable; non-destructive; local-first]
+## Roadmap
+| Version | Status | Theme |
+|---|---|---|
+| **v0** | ✅ shipped | [one-line capability theme] |
+| **v1** | 🟡 in progress | [theme] |
+| **v2** | 🔵 planned | [theme] |
+
+Status key: ✅ shipped · 🟡 in progress · 🔵 planned · ⏸ paused · ❌ dropped. Tag shipped versions (e.g. `v1.0.0`). One line per version here; full item lists, rationale, and rejected alternatives live in [`docs/roadmap.md`]. Link each milestone to what substantiates it — specs/tests (e.g. `tests/…`), design notes / ADRs (e.g. `docs/design-notes.md`). No volatile per-item lists in the README.
 ## Out of scope
 - [Don't-touch areas]
 - [Manually-maintained files]
