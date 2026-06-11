@@ -16,6 +16,7 @@ Storage repo for personal configurations — dotfiles, AI instruction templates,
 ## Where things live
 
 - `.ai-instructions/` — cross-project AI rules + reusable skill clusters. The `skills/` subdirectory is meant to be plucked into other projects' `.ai/skills/` or `.claude/skills/`.
+- `scripts/port-skills.sh` — copies `.ai-instructions/` (skills + `rules.md`) into another project, auto-detecting its AI tool (`.claude/` / `.cursor/` / `.ai/`). Idempotent; writes only inside the target. This is what "port all skills into my project" resolves to.
 - `scripts/setup.sh` — idempotent bootstrap; stamp file at `~/.setup-complete` prevents re-runs.
 - `.claude/`, `.bashrc`, `.bash_profile`, `.vimrc`, `.tmux.conf`, `.config/tmux/` — dotfiles copied into `$HOME` by setup.sh.
 - `TODO-tools.md` — backlog of CLI tools under evaluation. Not installed by the bootstrap.
