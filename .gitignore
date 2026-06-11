@@ -1,5 +1,22 @@
-# Machine-local Claude Code settings (permissions, paths, etc.)
-.claude/settings.local.json
+# --- AI agent state & per-CLI context adapters -------------------------------
+# This repo's portable, CLI-agnostic AI layer is .ai/ (skills + rules.md) and
+# AGENTS.md (the cross-tool context file every modern agent reads). Each CLI's
+# own working dir / local config / session data is tool-specific and may hold
+# PII — transcripts, history, credentials, file paths — so it is never committed.
+# Per-CLI context files (CLAUDE.md, etc.) are generated locally from AGENTS.md;
+# the deliberate Claude dotfile *sources* live in claude/ (tracked) instead.
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.local.md
+.cursor/
+.copilot/
+.aider*
+.continue/
+.codeium/
+.windsurf/
+.gemini/
+.qwen/
 
 # Secrets / credentials
 .env

@@ -27,7 +27,7 @@ Bash · Vim · Tmux · Markdown. Target: Linux/WSL2 (Mac/Windows notes under [Re
 
 ```
 configs/
-├── .ai-instructions/          # portable, cross-project AI layer
+├── .ai/                       # portable, CLI-agnostic AI layer
 │   ├── README.md              #   tool-agnostic structure template + skill catalog
 │   ├── rules.md               #   behavioral rules for any AI assistant, any project
 │   └── skills/                #   reusable SKILL.md clusters (losslessly compressed)
@@ -36,11 +36,11 @@ configs/
 │   ├── port-skills.sh         # copy the AI layer into another project (auto-detects its tool)
 │   ├── vm-linux-script-minify.sh  # zero/compress a VM image before export
 │   └── requirements.txt       # Python packages installed by setup
+├── claude/                    # Claude Code dotfile sources (settings + statusline) → ~/.claude/
 ├── .bashrc / .bash_profile    # interactive + login shell — aliases, vf/vr, git-branch prompt, PATH
 ├── .vimrc                     # vim config
 ├── .tmux.conf / .config/tmux/ # tmux config + TokyoNight Moon theme + pane colors + Eisenhower layout
-├── .claude/                   # Claude Code settings + status line (no secrets)
-├── CLAUDE.md                  # session context for Claude Code
+├── AGENTS.md                  # session context for any AI agent (CLAUDE.md is a gitignored local pointer)
 └── TODO-tools.md              # backlog of CLI tools to evaluate (not installed by the bootstrap)
 ```
 
@@ -48,10 +48,11 @@ The `skills/` subdirectory is the portable unit — pluck a `SKILL.md` into anot
 
 ## Rules
 
-- **Atomic docs.** Update `README.md` / `.ai-instructions/README.md` in the same commit as the thing they describe.
+- **Atomic docs.** Update `README.md` / `.ai/README.md` in the same commit as the thing they describe.
 - **No volatile enumerations.** No counts or exhaustive lists of growing collections (e.g. the skill set) — they go stale silently.
 - **Compressed skills.** `SKILL.md` files use separator-style inline lists, no prose padding; match the existing style.
-- **No internet without permission** (`.ai-instructions/rules.md` rule 0); secrets never enter the repo.
+- **No internet without permission** (`.ai/rules.md` rule 0); secrets never enter the repo.
+- **CLI-agnostic, PII-safe.** The portable layer is `.ai/` + `AGENTS.md`. Per-CLI harness dirs (`.claude/`, `.cursor/`, `.copilot/`, …) and the generated `CLAUDE.md` pointer are gitignored — they carry session data / credentials and must never be committed.
 - IMPORTANT: this is a storage repo, not application code — most changes are single-file dotfile/`SKILL.md` tweaks. Don't add build systems, frameworks, or a test harness.
 
 ## Workflow
@@ -67,7 +68,7 @@ Pluck-as-needed · tool-agnostic (the AI layer maps onto Claude Code / Cursor / 
 ## Out of scope
 
 - Not a deployable product, library, or application code.
-- Secrets — `.claude/settings.json` carries theme/status-line only; never commit credentials.
+- Secrets — `claude/settings.json` carries theme/status-line only; live per-CLI dirs (`.claude/`, `.cursor/`, …) and `CLAUDE.md` are gitignored so session data never lands in git; never commit credentials.
 - `.bashrc` / `.vimrc` / tmux config are personal — fork and adjust, not general-purpose defaults.
 - `TODO-tools.md` is a backlog under evaluation, not an install manifest.
 
@@ -94,14 +95,14 @@ Pluck-as-needed · tool-agnostic (the AI layer maps onto Claude Code / Cursor / 
 |---|---|
 | `.bashrc` | Interactive shell — history, aliases, `vf`/`vr` functions, SDKMAN, PATH |
 | `.bash_profile` | Login shell — sources `.bashrc`, sets colored `user @ dir (git-branch)` prompt |
-| `.claude/settings.json` | Claude Code — dark theme, custom status line |
-| `.claude/statusline-command.sh` | Status line: `user@host:cwd \| model \| ctx%` |
+| `claude/settings.json` | Claude Code — dark theme, custom status line (deployed to `~/.claude/`) |
+| `claude/statusline-command.sh` | Status line: `(git-branch) \| model \| ctx%` |
 
 Key aliases/functions: `ll`/`la`/`l` (ls variants) · `vf` (fzf-pick a file, open in vim) · `vr <regex>` (ripgrep → fzf-select → open at the matched line).
 
 ### Porting (`port-skills.sh`)
 
-Copies every skill cluster under `.ai-instructions/skills/` plus `rules.md` into a target project, auto-detecting its AI tool:
+Copies every skill cluster under `.ai/skills/` plus `rules.md` into a target project, auto-detecting its AI tool:
 
 | Target has | Skills land in | Rules land in |
 |---|---|---|

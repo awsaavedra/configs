@@ -171,19 +171,29 @@ if [ -f "$REPO_DIR/.config/tmux/themes/tokyonight_moon.tmux" ]; then
     echo "  Installed .config/tmux/themes/tokyonight_moon.tmux"
 fi
 
-# Claude Code settings
-if [ -f "$REPO_DIR/.claude/settings.json" ]; then
+# Claude Code personal dotfiles — source: tracked claude/ ; target: ~/.claude/
+# (the live ~/.claude working dir is gitignored in this repo; only these
+#  deliberate config files are version-controlled, under claude/.)
+if [ -f "$REPO_DIR/claude/settings.json" ]; then
     mkdir -p "$HOME/.claude"
-    cp "$REPO_DIR/.claude/settings.json" "$HOME/.claude/settings.json"
-    echo "  Installed .claude/settings.json"
+    cp "$REPO_DIR/claude/settings.json" "$HOME/.claude/settings.json"
+    echo "  Installed ~/.claude/settings.json"
 fi
 
 # Claude Code status line script
-if [ -f "$REPO_DIR/.claude/statusline-command.sh" ]; then
+if [ -f "$REPO_DIR/claude/statusline-command.sh" ]; then
     mkdir -p "$HOME/.claude"
-    cp "$REPO_DIR/.claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+    cp "$REPO_DIR/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
     chmod +x "$HOME/.claude/statusline-command.sh"
-    echo "  Installed .claude/statusline-command.sh"
+    echo "  Installed ~/.claude/statusline-command.sh"
+fi
+
+# Local Claude Code adapter: CLAUDE.md is gitignored (per-CLI file), so generate
+# a pointer to the tracked, tool-agnostic AGENTS.md when absent. Lets Claude Code
+# auto-load context on a fresh clone without committing a Claude-specific file.
+if [ -f "$REPO_DIR/AGENTS.md" ] && [ ! -e "$REPO_DIR/CLAUDE.md" ]; then
+    printf '# CLAUDE.md\n\nThis repo keeps agent context tool-agnostic in [AGENTS.md](AGENTS.md).\n\n@AGENTS.md\n' > "$REPO_DIR/CLAUDE.md"
+    echo "  Generated CLAUDE.md adapter -> AGENTS.md"
 fi
 
 
