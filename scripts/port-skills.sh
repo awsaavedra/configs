@@ -11,8 +11,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd -P)"
-SKILLS_SRC="$REPO_DIR/.ai-instructions/skills"
-RULES_SRC="$REPO_DIR/.ai-instructions/rules.md"
+SKILLS_SRC="$REPO_DIR/.ai/skills"
+RULES_SRC="$REPO_DIR/.ai/rules.md"
 
 BEGIN_MARK="<!-- BEGIN configs:rules -->"
 END_MARK="<!-- END configs:rules -->"
@@ -32,7 +32,7 @@ usage() {
     cat <<'EOF'
 Usage: port-skills.sh [OPTIONS] TARGET_DIR
 
-Copy the .ai-instructions/ skill clusters and rules.md into TARGET_DIR,
+Copy the .ai/ skill clusters and rules.md into TARGET_DIR,
 mapping to the AI tool detected there.
 
 Options:
@@ -201,7 +201,7 @@ trap 'rm -rf "$TMP_DIR"' EXIT
 # ---- run ----
 display_tool="$TOOL"
 [ "$TOOL" = none ] && display_tool="none (default .ai/ layout)"
-log "Porting .ai-instructions -> $TARGET"
+log "Porting .ai -> $TARGET"
 log "  tool: $display_tool"
 [ "$DRY_RUN" -eq 1 ] && log "  (dry run — no changes written)"
 
