@@ -1,6 +1,7 @@
 ---
 name: argumentation
 description: Four argumentation skills. /argumentation-hygiene (or "is this argument clean?", "what's that move where...") — audit arguments via good-faith principles, bad-faith taxonomy, self-audit checks. /you-sure (or "you sure?", "really?", "hold on") — self-audit a confident claim via ITT before doubling down. /steelyman (or "tear this apart", "devil's advocate", "poke holes") — consensual adversarial review of user's writing/code/plan/design. /double-crux (or "we disagree", "we're stuck", "let's find the actual disagreement") — symmetric disagreement where both sides name a crux. Tool-agnostic.
+when_to_use: Reasoning about contested claims, auditing an argument's honesty, stress-testing your own or the user's position, or locating the real point of a disagreement. Sub-skills self-trigger on the phrases above.
 ---
 
 # Argumentation Skills

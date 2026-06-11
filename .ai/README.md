@@ -77,6 +77,9 @@ Reusable Socratic / argumentation / diagnostic skills any AI assistant can invok
 **[Debug](skills/debug/SKILL.md)** — five-phase bug investigation
 - `debug` — Phased process for bugs, test failures, build failures, performance regressions, memory issues, and concurrency problems. Reproduce → pattern analysis → hypothesize/eliminate → fix at root → verify with fresh evidence. Enforces: no fix without confirmed root cause, no completion claim without verification, eliminate hypotheses rather than confirm them.
 
+**[Testing](skills/testing/SKILL.md)** — test design, not just running
+- `testing` — Test pyramid and what-to-test (behavior over implementation, edge-case enumeration), test doubles at injected seams, property-based testing, characterization tests for legacy code, and test-smell detection. Pairs with `architecture` (seams), `debug` (failing-test-first), and `rules.md` rule 4.
+
 **[Security](skills/security/SKILL.md)** — scoped security review
 - `security` — Evaluative, read-only by default. Scopes: `code` · `agent` · `infra` · `threat-model` · `full`. Outputs tiered findings (HIGH / MEDIUM / LOW / CLEAN) classified against OWASP Top 10:2025, CWE, CVSS v4. Covers language flaw matrices, ASI agent controls (14), STRIDE threat modeling, secrets handling, and compliance mapping (PCI / HIPAA / GDPR / SOC 2 / NIST / ISO).
 
@@ -85,7 +88,7 @@ Reusable Socratic / argumentation / diagnostic skills any AI assistant can invok
 
 ### Roadmap
 
-Candidate skills identified as gaps in the current suite. Listed in rough priority order; none drafted yet. The implemented skills cover software engineering at the **code level** (design, architecture, review, debug) — the **release & maintenance** side of shipping open-source software (versioning, changelogs, community health) is not yet covered and leads this list.
+Candidate skills identified as gaps in the current suite. Listed in rough priority order; none drafted yet. The implemented skills cover software engineering at the **code level** (design, architecture, review, debug, testing) — the **release & maintenance** side of shipping open-source software (versioning, changelogs, community health) is not yet covered and leads this list.
 
 1. **Release engineering** — Semver, changelog / release notes (Keep a Changelog + Conventional Commits), tagging, deprecation policy, backward-compatibility and API stability. Extends `software-engineering` §Documentation (the commit-message convention already lives there) and §Architecture (seams ↔ stable, replaceable interfaces).
 2. **Open-source governance / community health** — License selection, `CONTRIBUTING.md`, `CODE_OF_CONDUCT`, `SECURITY.md` and coordinated disclosure, issue / PR templates, triage. Pairs with the `security` skill (disclosure handling) and §Documentation.

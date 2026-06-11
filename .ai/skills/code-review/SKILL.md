@@ -37,6 +37,11 @@ medium     DRY · naming · function shape · smells
 low        style · minor verbosity
 ```
 
+## Hand-offs
+- Finding is a live bug (wrong output/state, not just a rule violation) → `debug` — root-cause it, don't patch in review.
+- Security-sensitive surface (auth, input handling, secrets, deserialization, SQL, file/exec) → `security` for a data-flow trace.
+- Missing, fragile, or absent tests → `testing` for coverage design.
+
 ## Gates
 
 Blocking checks specific to review (the rule-level gates live in `software-engineering`):
