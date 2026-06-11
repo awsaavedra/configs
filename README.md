@@ -9,7 +9,8 @@ Personal dotfiles, a fresh-machine bootstrap, and a portable AI-instruction laye
 ```bash
 git clone <this-repo> configs && cd configs
 bash scripts/setup.sh                          # bootstrap a fresh Linux/WSL2 machine (idempotent)
-bash scripts/port-skills.sh /path/to/project   # optional: drop the AI skills + rules into another project
+bash scripts/port.sh /path/to/project          # optional: port the AI skills + rules into another project
+bash scripts/port.sh --skills debug --config vim --tools fzf,fd /path/to/project   # …or pick only what you need
 ```
 
 ## Stack
@@ -19,7 +20,7 @@ Bash · Vim · Tmux · Markdown. Target: Linux/WSL2 (Mac/Windows notes under [Re
 ## Commands
 
 - Bootstrap: `bash scripts/setup.sh` — idempotent; `~/.setup-complete` stamp gates re-runs (delete it to re-run).
-- Port AI layer: `bash scripts/port-skills.sh [--tool claude|ai|cursor] [--skills-only] [--dry-run] [-q] TARGET_DIR` — see [Reference](#reference).
+- Port into a project: `bash scripts/port.sh [--skills V] [--config V] [--tools V] [--tool claude|ai|cursor] [--dry-run] [-q] TARGET_DIR` — one command, pick only what you need (`--list` shows options); see [Reference](#reference).
 - Slim a VM image: `sudo bash scripts/vm-linux-script-minify.sh` — run as root inside the VM before export.
 - Build / Test / Lint / Type-check: none — config repo. Validation is reading the file; lint non-trivial bash with `shellcheck`.
 
@@ -33,7 +34,7 @@ configs/
 │   └── skills/                #   reusable SKILL.md clusters (losslessly compressed)
 ├── scripts/
 │   ├── setup.sh               # idempotent fresh-machine bootstrap
-│   ├── port-skills.sh         # copy the AI layer into another project (auto-detects its tool)
+│   ├── port.sh                # port skills / configs / CLI-tools into another project (selective; auto-detects AI tool)
 │   ├── vm-linux-script-minify.sh  # zero/compress a VM image before export
 │   └── requirements.txt       # Python packages installed by setup
 ├── claude/                    # Claude Code dotfile sources (settings + statusline) → ~/.claude/
@@ -44,7 +45,7 @@ configs/
 └── TODO-tools.md              # backlog of CLI tools to evaluate (not installed by the bootstrap)
 ```
 
-The `skills/` subdirectory is the portable unit — pluck a `SKILL.md` into another project's `.ai/skills/` or `.claude/skills/`, or use `port-skills.sh` to copy the whole layer.
+The `skills/` subdirectory is the portable unit — pluck a `SKILL.md` into another project's `.ai/skills/` or `.claude/skills/`, or use `port.sh` to copy the whole layer.
 
 ## Rules
 
@@ -59,11 +60,11 @@ The `skills/` subdirectory is the portable unit — pluck a `SKILL.md` into anot
 
 - **Approach.** Smallest change that works; match surrounding style. Describe the approach and ask before large or lossy changes; small dotfile tweaks act directly.
 - **Commits.** `#type, what; what; what` — type ∈ `add`/`fix`/`doc`/`refactor`/`stabilize`/`edit`, clauses semicolon-separated. No Co-Authored-By trailer.
-- **Testing.** Reason about shell/vim/markdown correctness by reading; functionally test scripts (e.g. `port-skills.sh`) against throwaway temp dirs.
+- **Testing.** Reason about shell/vim/markdown correctness by reading; functionally test scripts (e.g. `port.sh`) against throwaway temp dirs.
 
 ## Design Principles
 
-Pluck-as-needed · tool-agnostic (the AI layer maps onto Claude Code / Cursor / Codex / Copilot) · idempotent (`setup.sh` and `port-skills.sh` re-run safely) · local-first and non-destructive (writes only where told; stamp files and self-port guards prevent surprises) · read-only reference for the outside world.
+Pluck-as-needed · tool-agnostic (the AI layer maps onto Claude Code / Cursor / Codex / Copilot) · idempotent (`setup.sh` and `port.sh` re-run safely) · local-first and non-destructive (writes only where told; stamp files and self-port guards prevent surprises) · read-only reference for the outside world.
 
 ## Out of scope
 
@@ -100,9 +101,9 @@ Pluck-as-needed · tool-agnostic (the AI layer maps onto Claude Code / Cursor / 
 
 Key aliases/functions: `ll`/`la`/`l` (ls variants) · `vf` (fzf-pick a file, open in vim) · `vr <regex>` (ripgrep → fzf-select → open at the matched line).
 
-### Porting (`port-skills.sh`)
+### Porting (`port.sh`)
 
-Copies every skill cluster under `.ai/skills/` plus `rules.md` into a target project, auto-detecting its AI tool:
+One command to port **only what you need** into another project — skills, dotfile configs, and a CLI-tool installer. Run `port.sh --list` to see what's available. With no category flag it ports every skill cluster under `.ai/skills/` plus `rules.md`, auto-detecting the target's AI tool:
 
 | Target has | Skills land in | Rules land in |
 |---|---|---|
@@ -111,7 +112,13 @@ Copies every skill cluster under `.ai/skills/` plus `rules.md` into a target pro
 | `AGENTS.md` or `.ai/` | `.ai/skills/` | managed block in `AGENTS.md` |
 | none of the above | `.ai/skills/` | managed block in `AGENTS.md` |
 
-Idempotent — re-run to re-sync; reports `created`/`updated`/`unchanged` per file and never duplicates the rules block. Flags: `--tool` forces a layout, `--skills-only` skips rules, `--dry-run` previews, `-q` quiets. Exit codes: 0 ok · 1 usage · 2 target missing · 3 source missing.
+Categories combine freely; each value is `all` or a comma list:
+
+- `--skills debug,security` — selected skill clusters (plus `rules.md` unless `--no-rules`).
+- `--config vim,tmux,bash` — dotfiles copied into the target at the same relative paths.
+- `--tools fzf,ripgrep,fd,bat,jq,…` — generates `scripts/install-tools.sh` in the target (apt + brew, with the Debian `batcat`/`fdfind` shims).
+
+Idempotent — re-run to re-sync; reports `created`/`updated`/`unchanged` per file and never duplicates the rules block. Other flags: `--tool` forces a layout, `--dry-run` previews, `-q` quiets. Exit codes: 0 ok · 1 usage · 2 target missing · 3 source missing.
 
 ### Tmux
 
