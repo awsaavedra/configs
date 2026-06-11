@@ -33,6 +33,7 @@ configs/
 ├── README.md
 ├── TODO-tools.md             # backlog of CLI tools to evaluate
 └── scripts/
+    ├── port-skills.sh         # copy skills + rules into another project
     ├── requirements.txt
     ├── setup.sh
     └── vm-linux-script-minify.sh
@@ -47,6 +48,7 @@ configs/
 | [Tmux](#tmux) | Keybindings, TokyoNight theme, Eisenhower Matrix layout |
 | [Vim](#vim) | `.vimrc` location and setup |
 | [AI Instructions](#ai-instructions) | Cross-project AI behavioral rules, tool-agnostic structure template, and reusable skill clusters |
+| [Porting](#porting) | One command to copy the skills + rules into another project |
 | [IntelliJ](#intellij) | Key shortcuts reference |
 | [Mac](#mac) | Quick-start checklist (iTerm2, Oh My Zsh, Rectangle, Homebrew) |
 | [Windows](#windows) | VS Code + WSL2 setup notes |
@@ -133,6 +135,29 @@ Three things live under [`.ai-instructions/`](.ai-instructions/):
 - [`rules.md`](.ai-instructions/rules.md) — cross-cutting behavioral rules I want every AI assistant to follow in any project.
 - [`README.md`](.ai-instructions/README.md) — a **tool-agnostic project structure** for organizing AI context (`AGENTS.md`, `.ai/rules/`, `.ai/commands/`, `.ai/skills/`, `.ai/agents/`, `.ai/hooks/`, `.mcp.json`). Generalized from Claude Code / Cursor / Aider / Codex CLI / Copilot conventions into one shared layout, with a cheatsheet mapping each concept to each tool.
 - [`skills/`](.ai-instructions/skills/) — reusable skill clusters ready to drop into any project's `.ai/skills/` or `.claude/skills/`.
+
+To copy them automatically, see [Porting](#porting).
+
+---
+
+## Porting
+
+Drop this repo's AI-instruction layer (every skill cluster under `.ai-instructions/skills/` + `rules.md`) into another project with one command:
+
+```bash
+bash scripts/port-skills.sh /path/to/your/project
+```
+
+It auto-detects the target's AI tool and places files where that tool expects them:
+
+| Target has | Skills land in | Rules land in |
+|---|---|---|
+| `.claude/` | `.claude/skills/` | managed block in `CLAUDE.md` |
+| `.cursor/` | `.ai/skills/` | `.cursor/rules/configs.mdc` |
+| `AGENTS.md` or `.ai/` | `.ai/skills/` | managed block in `AGENTS.md` |
+| none of the above | `.ai/skills/` | managed block in `AGENTS.md` |
+
+Idempotent — re-run to re-sync; it reports `created` / `updated` / `unchanged` per file and never duplicates the rules block. Flags: `--tool claude|ai|cursor` forces a layout, `--skills-only` skips rules, `--dry-run` previews, `-q` quiets output. Run with `--help` for details.
 
 ---
 

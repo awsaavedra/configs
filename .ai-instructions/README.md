@@ -42,13 +42,13 @@ Where a tool lacks native support, keep the file in `.ai/` anyway — documents 
 
 ## In this repo
 
-[`rules.md`](rules.md) holds cross-cutting AI rules for every project. [`skills/`](skills/) implements the six reusable skill clusters below — drop them into any project's `.ai/skills/` or symlink into `.claude/skills/` per the tool mapping above. The directory layout above is a **template** — apply per-project as needed.
+[`rules.md`](rules.md) holds cross-cutting AI rules for every project. [`skills/`](skills/) implements the reusable skill clusters cataloged below — drop them into any project's `.ai/skills/` or symlink into `.claude/skills/` per the tool mapping above, or run [`scripts/port-skills.sh`](../scripts/port-skills.sh) to do it in one command. The directory layout above is a **template** — apply per-project as needed.
 
 ## Skills
 
 **Rule:** All rules must be dual-readable (human + agent) and losslessly compressed to minimum tokens.
 
-Reusable Socratic / argumentation / diagnostic skills any AI assistant can invoke. Tool-agnostic — drop into `.ai/skills/` or symlink into `.claude/skills/` per the tool mapping above. Organized into two cluster files.
+Reusable Socratic / argumentation / diagnostic skills any AI assistant can invoke. Tool-agnostic — drop into `.ai/skills/` or symlink into `.claude/skills/` per the tool mapping above. Each cluster is a single `SKILL.md`.
 
 **[Argumentation cluster](skills/argumentation/SKILL.md)** — `/argumentation-hygiene`, `/you-sure`, `/steelyman`, `/double-crux`
 - `argumentation-hygiene` — Umbrella rulebook: good-faith principles, bad-faith taxonomy (motte-and-bailey, sealioning, gish gallop, etc.), self-audit checks.
@@ -85,10 +85,11 @@ Reusable Socratic / argumentation / diagnostic skills any AI assistant can invok
 
 ### Roadmap
 
-Candidate skills identified as gaps in the current suite. Listed in rough priority order; none drafted yet. Software-engineering and writing-paper workflows are considered covered by the implemented skills above.
+Candidate skills identified as gaps in the current suite. Listed in rough priority order; none drafted yet. The implemented skills cover software engineering at the **code level** (design, architecture, review, debug) — the **release & maintenance** side of shipping open-source software (versioning, changelogs, community health) is not yet covered and leads this list.
 
-1. **Estimation / forecasting** — Heuristics for time / cost / effort estimates: reference class forecasting, anchor-and-adjust, planning fallacy, range vs. point estimates, "the question is wrong" detection. Closes the loop with `decision-journal` — predictions logged there are the kind an estimation skill would help make well.
-2. **Planning / decomposition** — Turn ambiguous goals into structured plans: hierarchical breakdown, dependency mapping, definition-of-done, milestone selection, MoSCoW. Distinct from `delegation-ladder` (which routes existing work).
-3. **Data analysis hygiene** — Sanity checks, base rates, distribution awareness, outlier handling, confounders, Simpson's paradox, signal-vs-noise tests. `research` covers literature; this covers numbers.
-4. **Communication for action** — PRs, RFCs, async status updates with audience-awareness and action-oriented framing. Distinct from `documentation` (which syncs docs with code).
-5. **Prioritization** — ICE / RICE scoring, opportunity cost, "what to NOT do." Could fold into a planning skill or stand alone.
+1. **Release engineering** — Semver, changelog / release notes (Keep a Changelog + Conventional Commits), tagging, deprecation policy, backward-compatibility and API stability. Extends `software-engineering` §Documentation (the commit-message convention already lives there) and §Architecture (seams ↔ stable, replaceable interfaces).
+2. **Open-source governance / community health** — License selection, `CONTRIBUTING.md`, `CODE_OF_CONDUCT`, `SECURITY.md` and coordinated disclosure, issue / PR templates, triage. Pairs with the `security` skill (disclosure handling) and §Documentation.
+3. **Planning / decomposition** — Turn ambiguous goals into structured plans: hierarchical breakdown, dependency mapping, definition-of-done, milestone selection, MoSCoW, and prioritization (RICE / ICE, opportunity cost, "what to NOT do"). Distinct from `delegation-ladder` (which routes existing work); planning produces the breakdown that delegation then routes.
+4. **Estimation / forecasting** — Heuristics for time / cost / effort estimates: reference class forecasting, anchor-and-adjust, planning fallacy, range vs. point estimates, "the question is wrong" detection. Closes the loop with `decision-journal` — predictions logged there are the kind an estimation skill would help make well.
+5. **Communication for action** — PRs, RFCs, async status updates with audience-awareness and action-oriented framing. Distinct from `documentation` (which syncs docs with code).
+6. **Data analysis hygiene** — Sanity checks, base rates, distribution awareness, outlier handling, confounders, Simpson's paradox, signal-vs-noise tests. `research` covers literature; this covers numbers.
