@@ -156,6 +156,7 @@ vr() {
   line=$(echo "$sel" | cut -d: -f2)
   vim +"$line" "$file"
 }
+vg() { vr "$@"; }
 
 # --------------------------------------------------
 # Tool-chain sourcing (installed by setup.sh)
