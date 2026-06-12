@@ -42,7 +42,7 @@ Where a tool lacks native support, keep the file in `.ai/` anyway — documents 
 
 ## In this repo
 
-[`rules.md`](rules.md) holds cross-cutting AI rules for every project. [`skills/`](skills/) implements the reusable skill clusters cataloged below — drop them into any project's `.ai/skills/` or symlink into `.claude/skills/` per the tool mapping above, or run [`scripts/port.sh`](../scripts/port.sh) to do it in one command. The directory layout above is a **template** — apply per-project as needed.
+[`rules.md`](rules.md) holds the cross-cutting AI rules (0–7) for every project; [`readme-template.md`](readme-template.md) is the repo-README skeleton plus high-impact rule examples for scaffolding a new project's docs. [`skills/`](skills/) implements the reusable skill clusters cataloged below — drop them into any project's `.ai/skills/` or symlink into `.claude/skills/` per the tool mapping above, or run [`scripts/port.sh`](../scripts/port.sh) to do it in one command. The directory layout above is a **template** — apply per-project as needed.
 
 ## Skills
 
