@@ -5,6 +5,9 @@ Skeleton for a project README — fill the bracketed placeholders, drop sections
 ## Project
 [One line: what this does, who uses it]
 
+## Design Principles
+[Key constraints and tradeoffs this project optimizes for, e.g. composable; non-destructive; local-first]
+
 ## Quickstart
 [One line per step to get running, e.g. install deps, set env vars, run dev server]
 
@@ -29,8 +32,7 @@ Skeleton for a project README — fill the bracketed placeholders, drop sections
 - [Commit conventions]
 - [Testing expectations]
 - [Ask vs act]
-## Design Principles
-[Key constraints and tradeoffs this project optimizes for, e.g. composable; non-destructive; local-first]
+
 ## Roadmap
 | Version | Status | Theme |
 |---|---|---|
