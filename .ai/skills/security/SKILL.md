@@ -129,6 +129,8 @@ Use STRIDE before implementation or during architecture review.
 
 **Rules.** Never commit secrets · use a secret manager · inject at runtime · rotate on exposure · redact from logs · prefer short-lived credentials · keep out of git history, images, CI logs, and LLM context.
 
+**Pre-publish / post-leak.** Before a repo goes public — or after any exposure — scan *full* git history, not just the working tree (`git log -p`, `gitleaks`, `trufflehog`). On a hit, **rotate the credential first**: a history rewrite (`git-filter-repo` / BFG) never reaches existing forks, clones, mirrors, or caches. Publishing is irreversible — an indexed secret is burned regardless of later rewrites.
+
 ## Compliance
 
 | Framework | Key Checks |
