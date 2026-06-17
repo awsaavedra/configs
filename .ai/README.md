@@ -75,7 +75,13 @@ Reusable Socratic / argumentation / diagnostic skills any AI assistant can invok
 - `code-review` — Evaluative process distinct from code generation. Audits Design, Architecture, CLI, and Documentation rules; outputs `[FILE:LINE] RULE — fix: action` or `PASS` per item. Prioritized by correctness → seams → DRY/naming → style.
 
 **[Ship](skills/ship/SKILL.md)** — release-readiness gate (meta-skill)
-- `ship` — Decides whether a whole project is ready to go public. Runs an ordered, blocking filter — functional → quality → security → docs → governance → release → publish — delegating each stage to its owning skill (`testing` / `debug`, `code-review`, `security`, `software-engineering`), stopping at the first failure, emitting GO | NO-GO. Deterministic entry point: `/ship`.
+- `ship` — Decides whether a whole project is ready to go public. Runs an ordered, blocking filter — functional → quality → security → docs → governance → release → publish — delegating each stage to its owning skill (`testing` / `debug`, `code-review`, `security`, `software-engineering`, `governance`, `release-engineering`), stopping at the first failure, emitting GO | NO-GO. Deterministic entry point: `/ship`.
+
+**[Governance](skills/governance/SKILL.md)** — open-source governance / community health
+- `governance` — License selection, CONTRIBUTING / CODE_OF_CONDUCT / SECURITY.md, coordinated disclosure, issue & PR templates, DCO / CLA, triage. Owns the `ship` gate's governance stage; pairs with `security` for disclosure handling.
+
+**[Release engineering](skills/release-engineering/SKILL.md)** — versioning & releases
+- `release-engineering` — Semantic Versioning, Keep a Changelog, Conventional Commits → bump mapping, signed tagging, deprecation policy, breaking-change detection. Owns the `ship` gate's release stage.
 
 **[Debug](skills/debug/SKILL.md)** — five-phase bug investigation
 - `debug` — Phased process for bugs, test failures, build failures, performance regressions, memory issues, and concurrency problems. Reproduce → pattern analysis → hypothesize/eliminate → fix at root → verify with fresh evidence. Enforces: no fix without confirmed root cause, no completion claim without verification, eliminate hypotheses rather than confirm them.
@@ -91,11 +97,9 @@ Reusable Socratic / argumentation / diagnostic skills any AI assistant can invok
 
 ### Roadmap
 
-Candidate skills identified as gaps in the current suite. Listed in rough priority order; none drafted yet. The implemented skills cover software engineering at the **code level** (design, architecture, review, debug, testing). The **release & maintenance** side of going public is partially covered — the ordered, delegating ship-to-public *readiness gate* is the [`ship`](skills/ship/SKILL.md) meta-skill (`/ship`) — but the deeper per-stage *authoring* skills below are not yet drafted and lead this list.
+Candidate skills identified as gaps in the current suite, in rough priority order; none drafted yet. The implemented skills now cover software engineering at the **code level** (design, architecture, review, debug, testing) and the **release & maintenance** side of going public — the [`ship`](skills/ship/SKILL.md) readiness gate (`/ship`) plus [`governance`](skills/governance/SKILL.md) (community-health authoring) and [`release-engineering`](skills/release-engineering/SKILL.md) (versioning) for its stages. Remaining gaps:
 
-1. **Release engineering** — Semver, changelog / release notes (Keep a Changelog + Conventional Commits), tagging, deprecation policy, backward-compatibility and API stability. Owns the gate's **release** stage. Extends `software-engineering` §Documentation (the commit-message convention already lives there) and §Architecture (seams ↔ stable, replaceable interfaces).
-2. **Open-source governance / community health** — the *authoring* half of going public: license selection, `CONTRIBUTING.md`, `CODE_OF_CONDUCT`, `SECURITY.md` and coordinated disclosure, issue / PR templates, triage. Owns the gate's **governance** stage; the *evaluative* half (checking these exist and pass) is already the `ship` gate. Pairs with the `security` skill (disclosure handling) and §Documentation.
-3. **Planning / decomposition** — Turn ambiguous goals into structured plans: hierarchical breakdown, dependency mapping, definition-of-done, milestone selection, MoSCoW, and prioritization (RICE / ICE, opportunity cost, "what to NOT do"). Distinct from `delegation-ladder` (which routes existing work); planning produces the breakdown that delegation then routes.
-4. **Estimation / forecasting** — Heuristics for time / cost / effort estimates: reference class forecasting, anchor-and-adjust, planning fallacy, range vs. point estimates, "the question is wrong" detection. Closes the loop with `decision-journal` — predictions logged there are the kind an estimation skill would help make well.
-5. **Communication for action** — PRs, RFCs, async status updates with audience-awareness and action-oriented framing. Distinct from `documentation` (which syncs docs with code).
-6. **Data analysis hygiene** — Sanity checks, base rates, distribution awareness, outlier handling, confounders, Simpson's paradox, signal-vs-noise tests. `research` covers literature; this covers numbers.
+1. **Planning / decomposition** — Turn ambiguous goals into structured plans: hierarchical breakdown, dependency mapping, definition-of-done, milestone selection, MoSCoW, and prioritization (RICE / ICE, opportunity cost, "what to NOT do"). Distinct from `delegation-ladder` (which routes existing work); planning produces the breakdown that delegation then routes.
+2. **Estimation / forecasting** — Heuristics for time / cost / effort estimates: reference class forecasting, anchor-and-adjust, planning fallacy, range vs. point estimates, "the question is wrong" detection. Closes the loop with `decision-journal` — predictions logged there are the kind an estimation skill would help make well.
+3. **Communication for action** — PRs, RFCs, async status updates with audience-awareness and action-oriented framing. Distinct from `documentation` (which syncs docs with code).
+4. **Data analysis hygiene** — Sanity checks, base rates, distribution awareness, outlier handling, confounders, Simpson's paradox, signal-vs-noise tests. `research` covers literature; this covers numbers.
