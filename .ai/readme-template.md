@@ -8,6 +8,8 @@ Skeleton for a project README — fill the bracketed placeholders, drop sections
 ## Design Principles
 [Key constraints and tradeoffs this project optimizes for, e.g. composable; non-destructive; local-first]
 
+One line per principle here; full design choices — constraints, tradeoffs, rejected alternatives — live in [`docs/design.md`].
+
 ## Quickstart
 [One line per step to get running, e.g. install deps, set env vars, run dev server]
 
