@@ -6,8 +6,6 @@ when_to_use: Stress-testing a plan before commitment, finding root cause after a
 
 # Diagnostic Skills
 
----
-
 ## Pre-Mortem
 
 Assume failure already happened 6 months out; reverse-engineer why. Assuming failure surfaces specific modes better than "what could go wrong?" Distinct from Steelyman (idea right?) and Five-Whys (post-failure).

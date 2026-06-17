@@ -8,8 +8,6 @@ when_to_use: Writing, refactoring, or designing code. Apply design automatically
 
 ## Design
 
-Apply clean code principles automatically when writing or reviewing code.
-
 ### Rules
 - **Names:** Exact. Verbs→functions, nouns→classes. No abbreviations, no magic numbers.
 - **Functions:** One thing. ≤3 args (else object). No side effects. No flag args. ≤20 lines.
@@ -40,8 +38,6 @@ Build seams — places where behavior can be swapped without editing the caller 
 ---
 
 ## CLI / DevEx
-
-Rules for command-line interfaces and developer tooling.
 
 ### Rules
 - **POSIX-compliant.** Single-char `-v`, long-form `--verbose`. No Windows-only conventions.
