@@ -6,7 +6,7 @@ when_to_use: Reasoning about contested claims, auditing an argument's honesty, s
 
 # Argumentation Skills
 
-Four skills sharing core moves (ITT, cruxes, bet-grade confidence): rulebook, self-audit, adversarial challenge, symmetric disagreement.
+Four skills sharing core moves (ITT, cruxes, bet-grade confidence): hygiene = rulebook · you-sure = self-audit · steelyman = adversarial sparring · double-crux = symmetric disagreement.
 
 **Rhetoric vs. philosophy:** Rhetoric = persuasion. Philosophy = truth, then clarity. Sophistry = rhetoric masquerading as philosophy. These skills are philosophical. Test: *is this right?* not *does this sound right?* Constructing an argument you'd find persuasive but don't believe → stop; that's the failure mode these skills exist to prevent.
 
@@ -65,8 +65,6 @@ Rulebook for honest argument. Umbrella for the other three skills. Three parts: 
 - **Team of Rivals:** embed disagreement structurally inside one decision system.
 
 ITT > steelman: requires understanding *why* a thoughtful person holds the view, not just that it has defensible form.
-
-**Skill map:** hygiene = rulebook · you-sure = self-audit · steelyman = sparring · double-crux = symmetric disagreement.
 
 **Prompt seed:** State the other side's position so they'd endorse it; name your crux; check whether your response engages substance or deflects.
 
