@@ -17,7 +17,7 @@ Pick one; put `LICENSE` at the repo root; add SPDX headers (`SPDX-License-Identi
 | Share-alike for distributed binaries | GPL-3.0 |
 | Share-alike incl. network / SaaS use | AGPL-3.0 |
 
-Rules: the license must be **compatible with every dependency's** license — copyleft is viral, pulling GPL into a permissive project relicenses the combination · one canonical license · don't invent or edit license terms · **not legal advice — route licensing / patent / trademark questions to counsel.**
+Rules: the license must be **compatible with every dependency's** license — copyleft is viral, pulling GPL into a permissive project relicenses the combination · one canonical license · don't invent or edit license terms · **not legal advice — route licensing / patent / trademark questions to counsel.** For the protective boilerplate *around* the license (AS-IS / warranty disclaimer, liability cap, NOTICE / attribution, trademark reservation) see `legal`.
 
 ## Community-health files
 - `README` — what / why, install, quickstart, license, links (see `software-engineering` §Documentation).
