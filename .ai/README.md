@@ -80,6 +80,9 @@ Reusable Socratic / argumentation / diagnostic skills any AI assistant can invok
 **[Governance](skills/governance/SKILL.md)** — open-source governance / community health
 - `governance` — License selection, CONTRIBUTING / CODE_OF_CONDUCT / SECURITY.md, coordinated disclosure, issue & PR templates, DCO / CLA, triage. Owns the `ship` gate's governance stage; pairs with `security` for disclosure handling.
 
+**[Legal](skills/legal/SKILL.md)** — open-source protective boilerplate
+- `legal` — The disclaimer / liability / attribution language around a release: AS-IS warranty disclaimer + limitation of liability (and why you rely on the license's, not your own), when a standalone disclaimer *is* needed (un-licensed snippets, README claims, demos, dual-use tooling), NOTICE / third-party attribution, trademark & endorsement reservation, export / high-risk clauses, and a hard "not legal advice — escalate to counsel" boundary. Feeds the `ship` gate's governance stage; pairs with `governance` (which selects the license).
+
 **[Release engineering](skills/release-engineering/SKILL.md)** — versioning & releases
 - `release-engineering` — Semantic Versioning, Keep a Changelog, Conventional Commits → bump mapping, signed tagging, deprecation policy, breaking-change detection. Owns the `ship` gate's release stage.
 
