@@ -2,6 +2,8 @@
 
 Skeleton for a project README — fill the bracketed placeholders, drop sections that don't apply. Pairs with [`rules.md`](rules.md) (the 0–7 behavioral rules); the `## Rules` section below is where project-specific rules go, seeded by the high-impact examples at the bottom.
 
+**Convention:** the README is a thin index — one scannable line per topic. Long-form documentation (design rationale, roadmap detail, support matrix, ADRs, ops runbooks) lives under `docs/` and is *linked* from here, never inlined. This keeps the README skimmable and lets each doc evolve on its own cadence. A section that grows past a few lines is a signal to move its body into `docs/<topic>.md` and leave a one-line pointer.
+
 ## Project
 [One line: what this does, who uses it]
 
@@ -16,6 +18,11 @@ One line per principle here; full design choices — constraints, tradeoffs, rej
 ## Stack
 [Framework, language, database, deployment]
 
+## Supported
+[Operating systems / arch, runtime or language version range, hardware minimums — one line]
+
+Brief here; the full compatibility matrix — per-version OS support, arch, runtime ranges, tested-vs-best-effort tiers — lives in [`docs/support.md`]. This is current-state compatibility, distinct from the time-ordered [`docs/roadmap.md`].
+
 ## Commands
 - Dev: `[cmd]`
 - Build: `[cmd]`
@@ -26,6 +33,7 @@ One line per principle here; full design choices — constraints, tradeoffs, rej
 ## Architecture
 - [folder] → [what lives here]   (one line per folder)
 - [file] → [what this file does]
+- `mcp/<server>/` → in-repo MCP server implementations; the root `.mcp.json` declares/launches them (omit if you only consume published servers)
 ## Rules
 - [Rule preventing a specific mistake]   (3-5 entries)
 - IMPORTANT: [The one rule ai-tool keeps breaking]
