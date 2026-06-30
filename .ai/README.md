@@ -6,7 +6,8 @@ Tool-agnostic layout for AI assistant context. Maps onto Claude Code, Cursor, Ai
 project/
 ├── AGENTS.md              # Session context: stack, commands, constraints
 ├── AGENTS.local.md        # Personal overrides (gitignored)
-├── .mcp.json              # MCP servers (external integrations)
+├── .mcp.json              # MCP server connections (config: which servers + how to launch)
+├── mcp/                   # In-repo MCP server implementations — one subfolder per server; .mcp.json points here
 └── .ai/
     ├── settings.json      # Permissions, tool access, model defaults
     ├── settings.local.json
@@ -36,7 +37,7 @@ Where a tool lacks native support, keep the file in `.ai/` anyway — documents 
 1. `AGENTS.md` — symlink your tool's expected file to it.
 2. `.ai/rules/` — when one rules file gets too long.
 3. `.ai/commands/` — first time you copy-paste the same prompt twice.
-4. `.mcp.json` — when the assistant needs external systems.
+4. `.mcp.json` — when the assistant needs external systems; if you *author* a server in-repo (rather than consume a published one), its code lives in `mcp/<name>/` and `.mcp.json` points at it.
 5. `.ai/hooks/` — when the harness should catch something deterministically.
 6. `.ai/agents/` + `.ai/skills/` — when the main context gets crowded.
 
