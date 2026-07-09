@@ -31,8 +31,9 @@ Brief here; the full compatibility matrix — per-version OS support, arch, runt
 - Lint: `[cmd]`
 - Type check: `[cmd]`
 ## Architecture
-- [folder] → [what lives here]   (one line per folder)
-- [file] → [what this file does]
+**Flat bullet list only — no ASCII tree diagrams.** One line per entry; top-level folders and key files only. Trees look good once and go stale silently — a flat list is easier to maintain and diff.
+- `[folder]/` → [what lives here]
+- `[file]` → [what this file does]
 - `mcp/<server>/` → in-repo MCP server implementations; the root `.mcp.json` declares/launches them (omit if you only consume published servers)
 ## Rules
 - [Rule preventing a specific mistake]   (3-5 entries)
