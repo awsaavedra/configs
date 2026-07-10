@@ -39,6 +39,8 @@ Build seams — places where behavior can be swapped without editing the caller 
 
 ## CLI / DevEx
 
+Rules for the command-line surface. Programmatic public surfaces — library exports, service endpoints, wire formats — → `api-design` (same contract discipline, different surface).
+
 ### Rules
 - **POSIX-compliant.** Single-char `-v`, long-form `--verbose`. No Windows-only conventions.
 - **Pipeline-friendly.** stdin/stdout first. Zero interactive prompts; no graphical dependencies.

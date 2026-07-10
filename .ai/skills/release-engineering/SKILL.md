@@ -1,7 +1,7 @@
 ---
 name: release-engineering
 description: Versioning and release skill — Semantic Versioning, Keep a Changelog, Conventional Commits, tagging, deprecation policy, backward-compatibility / API stability. Triggers: /release · "cut a release" · "version bump" · "is this a breaking change" · "write the changelog" · "deprecate this". Owns the `ship` gate's release stage.
-when_to_use: Preparing or cutting a release, choosing a version bump, writing release notes, or planning a deprecation. Pairs with `ship` (release stage), `software-engineering` §Documentation (commit convention) and §Architecture (stable, replaceable interfaces).
+when_to_use: Preparing or cutting a release, choosing a version bump, writing release notes, or planning a deprecation. Pairs with `ship` (release stage), `software-engineering` §Documentation (commit convention) and §Architecture (stable, replaceable interfaces). Designing the contract so MAJOR stays rare (surface, error semantics, additive evolution) → api-design.
 ---
 
 # Release Engineering

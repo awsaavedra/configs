@@ -42,6 +42,7 @@ low        style · minor verbosity
 - Security-sensitive surface (auth, input handling, secrets, deserialization, SQL, file/exec) → `security` for a data-flow trace.
 - Missing, fragile, or absent tests → `testing` for coverage design.
 - Docs problems beyond this diff's currency (coverage gaps, duplication, structure, navigability) → `docs-review` — the corpus-level docs audit.
+- Diff adds or changes a public contract (export, endpoint, error shape, config key) → `api-design` for the contract check; the version consequence → `release-engineering` §Breaking.
 - Taking the whole project public (open-source / first release), not just this diff → `ship` — the release-readiness gate that runs this review as its quality stage.
 
 ## Gates
