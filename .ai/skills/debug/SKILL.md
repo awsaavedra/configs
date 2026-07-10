@@ -1,7 +1,7 @@
 ---
 name: debug
 description: Phased bug investigation. Use before proposing any fix for bugs, errors, unexpected behavior, test/build failures, perf/memory regressions, or concurrency issues. Triggers: `/debug` · "debug this" · "fix this bug" · "why isn't this working" · "value is null" · "not updating" · "investigate this" · "tests failing" · "slow" · "memory leak" · "race condition" · "flaky test" · "broken build".
-when_to_use: Any code change responding to a bug or unexpected behavior. Auto-engages on the triggers above.
+when_to_use: Any code change responding to a bug or unexpected behavior. Auto-engages on the triggers above. Proactive performance work (budgets, profiling, benchmarking before anything regressed) → performance.
 ---
 
 # Debug

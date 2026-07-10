@@ -14,7 +14,7 @@ when_to_use: Writing, refactoring, or designing code. Apply design automatically
 - **Comments:** Explain *why*, never *what*. No commented-out code. Block needs explaining → extract to named function.
 - **Classes:** SRP. DIP. Prefer composition over inheritance.
 - **DRY:** One authoritative home per piece of knowledge.
-- **KISS/YAGNI:** Simplest solution that works. Don't build for imaginary futures.
+- **KISS/YAGNI:** Simplest solution that works. Don't build for imaginary futures — including imaginary hot paths (`performance`: no optimization without a measurement).
 - **Fail fast:** Validate at boundary; surface errors early.
 - **Smells:** long methods · large classes · duplicates · feature envy · primitive obsession · type-switch chains · dead code
 - **Boy Scout Rule:** Leave every file cleaner than found.

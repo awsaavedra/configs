@@ -1,7 +1,7 @@
 ---
 name: data-analysis
 description: Hygiene for drawing conclusions from numbers — provenance + sanity checks before any statistic, plot before summarizing, named denominators + base rates, distribution over mean, outliers investigated not silently dropped, confounder / selection-bias / Simpson's-paradox checks before causal stories, signal-vs-noise guards (regression to the mean, multiple comparisons, practical vs statistical significance). Triggers: /data-analysis · "analyze this data" · "what do these numbers say" · "is this metric real" · "does this trend hold" · "did the experiment work".
-when_to_use: Drawing a conclusion from numbers — metrics, benchmarks, experiment results, survey data — or auditing a conclusion someone else drew. `research` covers what the literature says; this covers what the data says. Not topic investigation (research), not root-causing a failure (debug, whose evidence rules bind here too).
+when_to_use: Drawing a conclusion from numbers — metrics, benchmarks, experiment results, survey data — or auditing a conclusion someone else drew. `research` covers what the literature says; this covers what the data says. Not topic investigation (research), not root-causing a failure (debug, whose evidence rules bind here too), not producing the benchmark itself — budgets, workload, environment (performance; its results are read under these rules).
 ---
 
 # Data Analysis
