@@ -2,7 +2,7 @@
 
 Skeleton for a project README — fill the bracketed placeholders, drop sections that don't apply. Pairs with [`rules.md`](rules.md) (the 0–7 behavioral rules); the `## Rules` section below is where project-specific rules go, seeded by the high-impact examples at the bottom.
 
-**Convention:** the README is a thin index — one scannable line per topic. Long-form documentation (design rationale, roadmap detail, support matrix, ADRs, ops runbooks) lives under `docs/` and is *linked* from here, never inlined. This keeps the README skimmable and lets each doc evolve on its own cadence. A section that grows past a few lines is a signal to move its body into `docs/<topic>.md` and leave a one-line pointer.
+**Convention:** the README is a thin index — one scannable line per topic. Long-form documentation (design rationale, roadmap detail, support matrix, ADRs, ops runbooks) lives under `docs/` and is *linked* from here, never inlined. This keeps the README skimmable and lets each doc evolve on its own cadence. A section that grows past a few lines is a signal to move its body into `docs/<topic>.md` and leave a one-line pointer. These layout conventions are audited by [`skills/docs-review`](skills/docs-review/SKILL.md).
 
 ## Project
 [One line: what this does, who uses it]

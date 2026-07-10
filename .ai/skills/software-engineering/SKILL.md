@@ -50,6 +50,8 @@ Build seams — places where behavior can be swapped without editing the caller 
 
 ## Documentation
 
+Currency rules — docs match committed code. Auditing an existing corpus's *structure* (coverage, duplication, terseness, navigability) → `docs-review`, which runs these rules as its first pass.
+
 ### Rules
 - **Reflect actual state.** Document what is implemented, not what was planned or is aspirational.
 - **Exact paths and decisions.** File paths, architectural choices, removed dependencies — all explicit.

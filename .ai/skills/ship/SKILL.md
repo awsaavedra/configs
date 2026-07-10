@@ -1,7 +1,7 @@
 ---
 name: ship
 description: Release-readiness gate — the ordered, delegating filter that decides whether a whole project is ready to go public (open-source / first release). Meta-skill: runs other skills as stages and emits GO | NO-GO. Triggers: /ship · "ready for prime time" · "is this ready to open-source" · "ship-to-public check" · "run the release-readiness gate".
-when_to_use: Taking a whole project public or cutting a first release — not a single-diff review (that's `code-review`). Deterministic entry point: type `/ship`. Delegates to the skills it names per stage (`testing`, `debug`, `code-review`, `security`, `software-engineering`, `governance`, `legal`, `privacy`, `release-engineering`); port those alongside it.
+when_to_use: Taking a whole project public or cutting a first release — not a single-diff review (that's `code-review`). Deterministic entry point: type `/ship`. Delegates to the skills it names per stage (`testing`, `debug`, `code-review`, `security`, `docs-review`, `governance`, `legal`, `privacy`, `release-engineering`); port those alongside it.
 ---
 
 # Ship
@@ -14,7 +14,7 @@ Stages in order. Each is blocking: **STOP at the first FAIL**, emit the report, 
 1. **Functional** — builds · tests pass · runs from a clean clone → `testing` · `debug`.
 2. **Quality** — codebase passes the review audit → `code-review`.
 3. **Security** — full git-history secret/PII scan (`security` §Secrets *Pre-publish*) + dependency CVE / lockfile audit (§Dependencies) → `security full`.
-4. **Docs** — README / install / usage reflect actual state; quickstart works from the clean clone → `software-engineering` §Documentation.
+4. **Docs** — README / install / usage reflect actual state; quickstart works from the clean clone; corpus is deduplicated, terse, navigable → `docs-review` (currency rules via `software-engineering` §Documentation).
 5. **Governance** — LICENSE · CONTRIBUTING · CODE_OF_CONDUCT · SECURITY.md + disclosure · issue / PR templates present and accurate → `governance`; protective boilerplate (AS-IS / warranty disclaimer, liability cap, NOTICE / attribution, trademark reservation) → `legal`.
 6. **Privacy** — personal-identity & data-minimization sweep of everything authored for publication: contacts in `SECURITY.md` / `CODE_OF_CONDUCT.md` / README · `author` / `maintainer` fields in package metadata · commit-author identity · example / fixture data → `privacy`. Runs *after* Docs + Governance on purpose — those stages author the contacts, and the stage-3 history scan cannot see PII that stages 4–5 introduce.
 7. **Release** — semver · changelog · tag plan · deprecation policy → `release-engineering`.
