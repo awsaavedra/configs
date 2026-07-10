@@ -6,7 +6,7 @@ when_to_use: A goal too big or vague to start — before work is routed or estim
 
 # Planning
 
-A plan is a falsifiable claim about how a goal decomposes — not a wish list. This skill produces the breakdown; `delegation-ladder` routes it, `pre-mortem` stress-tests it, `decision-journal` logs its predictions.
+A plan is a falsifiable claim about how a goal decomposes — not a wish list. This skill produces the breakdown; `delegation-ladder` routes it, `estimation` sizes it, `pre-mortem` stress-tests it, `decision-journal` logs its predictions.
 
 ## Definition of done
 - Restate the goal as a **verifiable outcome** — observable evidence, not activity ("users can export CSV", not "work on export").

@@ -67,7 +67,7 @@ Comprehension audit: explain in plain language to a smart 12-year-old. Points wh
 
 ## Decision Journal
 
-Log decisions + predictions + confidence; check back; surface calibration patterns over time. Closes the prediction→outcome loop most people never close. Practice across time — not an in-conversation flow.
+Log decisions + predictions + confidence; check back; surface calibration patterns over time. Closes the prediction→outcome loop most people never close. Practice across time — not an in-conversation flow. Effort / time estimates are the canonical logged prediction — `estimation` produces them; calibration patterns found here feed its next named adjustment.
 
 **Triggers:** `/decision-journal` · "log this decision" · "track this prediction" · "check back in N weeks" · before any decision with an evaluable expectation.
 **Skip:** trivial decisions · inherently unevaluable outcomes · decisions you don't want to scrutinize.
