@@ -28,7 +28,7 @@ Performance is a requirement with a budget, not a virtue to maximize. This skill
 - Microbenchmark traps: dead-code elimination (consume the result), measuring the harness, optimizing what the compiler already removed.
 
 ## Complexity budgets
-- **Big-O is the one legitimate design-time performance concern** — algorithm and data-structure choice is cheap before implementation and expensive after; choosing the right complexity class is not premature optimization.
+- **Big-O is the one legitimate design-time performance concern** — algorithm and data-structure choice is cheap before implementation and expensive after.
 - **Know n** — and its growth. O(n²) on a bounded n of 50 is fine forever; O(n log n) on unbounded user data is a budget question.
 - Constant-factor tuning waits for a measurement; complexity-class decisions don't.
 

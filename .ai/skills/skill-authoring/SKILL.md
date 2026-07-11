@@ -31,7 +31,7 @@ The suite's rules apply to the suite: one authoritative home per piece of knowle
 Drift eats the bookkeeping first: a skill isn't done until wired, and it wires in the same commit.
 - **README catalog** — one bolded header line + one dense bullet mirroring the description, placed by cluster affinity.
 - **Roadmap** — a new skill closes a recorded gap: coverage clause added to the intro, gap removed, remainder renumbered. New candidates are recorded as gaps *before* drafting; ideas consciously not pursued go to Deferred so the no is a decision (`planning` §Prioritization).
-- **Reciprocal hand-offs** — adjacent skills' when_to_use / hand-off lists updated to route back; every §-reference checked to resolve.
+- **Reciprocal hand-offs** applied in the adjacent skills (§Frontmatter); every §-reference checked to resolve.
 - **Gate integration** — if a meta-gate (`ship`, `writing-ship`) owns a stage the skill implements, the gate's stage list points at it.
 - **The commit message is the design record** — `#add, <name> skill (path) — framing; sections; wiring; README` per `software-engineering` §Documentation; the reasoning lives there, not padded into the skill.
 

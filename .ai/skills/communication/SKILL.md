@@ -21,11 +21,10 @@ Short-form workplace writing succeeds when the reader acts — anything that doe
 |---|---|---|
 | PR description | Reviewed fast, reviewed well | what + why (diff shows how) · how to review: entry point, order, what to scrutinize · risk + rollback · linked issue |
 | RFC / proposal | Decision made, recorded | context → proposal → alternatives with why-nots → open questions → decision requested + deadline + default |
-| Status update | Reader re-plans correctly | delta since last update · at-risk items · blockers with named asks · next steps with dates — never an activity log |
+| Status update | Reader re-plans correctly | delta since last update · at-risk items · blockers with named asks · next steps with dates — progress against `planning`'s done-checks, never an activity log of effort expended |
 | Ask / escalation | Unblocked | the ask first, sized (minutes? decision? budget?) · deadline + cost of no-decision · escalate the decision, not the blame |
 
 - **RFC alternatives are steelmanned** (`argumentation` §Steelyman) — a why-not that misstates the alternative invites relitigating it.
-- **Status deltas:** "what changed, what's at risk, what I need" — progress against the plan (`planning`'s done-checks), not effort expended.
 - **Escalations carry evidence, not narrative** — the two-line version: blocked on X since <date>, tried A/B, need <decision> by <date> or <consequence>.
 
 ## Decisions outlive threads
