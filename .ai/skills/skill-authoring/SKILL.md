@@ -1,6 +1,6 @@
 ---
 name: skill-authoring
-description: Meta-skill — how a SKILL.md in this suite is written and wired in. Frontmatter contract (description = retrieval surface with triggers; when_to_use = boundary ending in a not-for chain), dual-readable lossless compression (bold rule + why, aphorism over qualifiers, reference never restate), standard blocks (framing line, Output template, Gates, explicit N/A grammar), wiring bookkeeping (catalog + roadmap in the same commit, reciprocal hand-offs, gate integration). Triggers: /skill-authoring · "add a skill" · "write a SKILL.md" · "wire in a new skill" · "audit the catalog".
+description: Meta-skill — how a SKILL.md in this suite is written and wired in. Frontmatter contract (description = retrieval surface with triggers; when_to_use = boundary ending in a not-for chain), dual-readable lossless compression (bold rule + why, aphorism over qualifiers, reference never restate, post-draft compression pass), standard blocks (framing line, Output template, Gates, explicit N/A grammar), wiring bookkeeping (catalog + roadmap in the same commit, reciprocal hand-offs, gate integration). Triggers: /skill-authoring · "add a skill" · "write a SKILL.md" · "wire in a new skill" · "audit the catalog".
 when_to_use: Creating or revising a skill in this suite, or auditing catalog / roadmap / hand-off consistency. Owns the conventions, not the content — the skill's domain expertise is its own problem. Not auditing a docs corpus (docs-review), not prose craft (writing).
 ---
 
@@ -19,6 +19,7 @@ The suite's rules apply to the suite: one authoritative home per piece of knowle
 - **Bold rule + why** — `**Rule** — consequence.` A rule without its why gets pattern-matched and ignored; the why is the compressed argument.
 - **Aphorism over qualifiers** — one memorable line ("a benchmark that moves with the weather measures the weather") outlives three hedged sentences; compress the reasoning into the image.
 - **Reference, never restate** — one authoritative home per rule across the suite; others cite `skill` §Section (multi-word sections hyphenated: §Decision-Journal; loose partials tolerated: §Breaking). Restating forks the rule.
+- **The compression pass** — after drafting and on every revisit, re-read hunting restatements: a clause repeating its own bold lead · a bullet restating a table row · a rule another skill owns. A cut is lossless only if the rule, its why, and its example survive; a cut that loses the why saves tokens and drops the argument.
 - Broad → narrow; `##` per concern; ~50–60 lines total — past that, it's probably two skills.
 
 ## Structure
