@@ -1,7 +1,7 @@
 ---
 name: docs-review
 description: Corpus-level documentation audit — the docs analog of `code-review`. Evaluative pass over a project's whole documentation surface, ordered: currency → coverage → one-authoritative-home → terseness → navigability. Target state: terse, comprehensive, clearly navigable. Output: `[FILE:§SECTION] RULE — fix: action` or PASS. Triggers: /docs-review · "tighten the docs" · "audit the documentation" · "streamline the README" · "are the docs navigable". Owns the `ship` gate's Docs stage.
-when_to_use: Reviewing or tightening an existing docs corpus (README, docs/, community files, package-metadata descriptions) as a whole. Not a single diff (that's `code-review` pass 4), not writing new prose (that's `writing` §Explainer), not scaffolding a new project (that's `readme-template.md`). Currency rules live in `software-engineering` §Documentation — this skill runs them, then audits structure.
+when_to_use: Reviewing or tightening an existing docs corpus (README, docs/, community files, package-metadata descriptions) as a whole. Not a single diff (that's `code-review` pass 4), not writing new prose (that's `writing` §Explainer), not scaffolding a new project (that's `readme-template.md`), not this suite's own SKILL.md conventions (that's `skill-authoring`). Currency rules live in `software-engineering` §Documentation — this skill runs them, then audits structure.
 ---
 
 # Docs Review
