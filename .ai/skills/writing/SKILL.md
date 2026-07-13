@@ -24,6 +24,8 @@ Name the type before applying any rule — the wrong lens is the failure this ta
 ## Thesis — argument · essay · review
 - One sentence, falsifiable, stated early. Can't write it → you have notes, not a piece.
 - Everything supports the thesis or explicitly earns its digression. Neither → cut.
+- **Work of ants (Russell), Occam's razor opposing.** Build from stated axioms up, every inferential step on the page; against it, the shortest derivation that keeps its explanatory power. Rigor adds steps, parsimony cuts them; done where neither moves.
+- **Minimum message length.** The product test of that balance — Graham's "uncompressible": remove or replace any part and the argument falls; every summary is lossy. A piece that compresses losslessly was padding around its own summary.
 - Title is a claim or a promise, not a topic label — "How we cut build times 40%", not "Thoughts on builds."
 
 ## Structure
@@ -38,6 +40,7 @@ Name the type before applying any rule — the wrong lens is the failure this ta
 - **Scene vs. summary:** dramatize the turning points; summarize the connective tissue.
 - **Show, don't tell** — emotion and character are shown; plumbing (time, logistics) is told.
 - Concrete sensory specifics — specificity is credibility.
+- **Chekhov's gun:** whatever you introduce must fire; an unfired detail is a broken promise (§Thesis's minimum-message-length test, narrative form).
 - Personal essay: the experience is the evidence, the meaning is the thesis-analog; the "so what" must surface without a bolted-on moral.
 - Memoir truth: never invent events; compression / reordering is a deliberate, owned choice.
 

@@ -43,7 +43,7 @@ Contrast before any hypothesis:
 4. **Identify the gap** — what env / config / state / timing does the working version have that the broken one doesn't?
 
 ## Phase 3 — Hypothesize & Eliminate
-1. List 3–5 candidate root causes explicitly.
+1. List 3–5 candidate root causes explicitly — several can be true at once (Hickam's dictum); a confirmed cause acquits the rest only when it explains the full symptom set.
 2. **Eliminate, don't confirm.** Smallest test that would DISPROVE each. Test most falsifiable first, not most likely.
 3. State one active hypothesis: *"I believe X because Y. This disproves it if Z."*
 4. Not disproved → next hypothesis. Never layer fixes on a failed attempt.

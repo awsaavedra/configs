@@ -22,6 +22,7 @@ Rulebook for honest argument. Umbrella for the other three skills. Three parts: 
 ### Good-Faith Principles
 - **Spirit vs. letter.** Engage meaning, not just literal words.
 - **Charity.** Default to strongest plausible reading; name ambiguity when it's itself a tell.
+- **Hanlon's razor.** Error before malice — charity extended to motives, not just readings.
 - **Translation test.** Restate in different vocabulary — if you can only repeat exact words, you may be parroting.
 - **Cruxes.** Name what evidence would flip your position; without cruxes, no path to resolution.
 - **Bet-grade confidence.** "90% sure" = willing to take 9:1 odds.
@@ -43,7 +44,7 @@ Rulebook for honest argument. Umbrella for the other three skills. Three parts: 
 - **Whataboutism.** Deflect with unrelated issue. *Fix:* finish current argument first.
 - **No true Scotsman.** Definition tightens after evidence surfaces. *Fix:* define before evidence comes in.
 - **Goalpost shifting.** Change criteria after the fact. *Fix:* commit before the test.
-- **Burden-of-proof flipping.** Demand others disprove. *Fix:* claimant defends.
+- **Burden-of-proof flipping.** Demand others disprove. *Fix:* claimant defends — Hitchens's razor: asserted without evidence, dismissible without evidence.
 - **False dichotomy.** Two options when more exist. *Fix:* name the missing options.
 - **Gish gallop.** Many weak arguments faster than refutation. *Fix:* pick the strongest two; require defense.
 - **Galaxy-brained reasoning.** Plausible chain → wild conclusion. *Tell:* conclusion more surprising than any step warrants. *Fix:* trust the surprise; audit the chain.
