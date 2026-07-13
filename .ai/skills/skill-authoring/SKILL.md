@@ -38,7 +38,7 @@ Name the kind first — it decides the shape.
 ## Wiring
 Drift eats the bookkeeping first: a skill isn't done until wired, and it wires in the same commit.
 - **README catalog** — one bolded header line + one dense bullet mirroring the description, placed by cluster affinity.
-- **Roadmap** — a new skill closes a recorded gap: coverage clause added to the intro, gap removed, remainder renumbered. New candidates are recorded as gaps *before* drafting; ideas consciously not pursued go to Deferred so the no is a decision (`planning` §Prioritization).
+- **Roadmap** — a new skill closes a gap recorded in `roadmap.md` (open gaps, by swim lane): gap removed there, coverage clause added to the README §Roadmap intro. New candidates are recorded as gaps *before* drafting; ideas consciously not pursued go to README §Deferred so the no is a decision (`planning` §Prioritization).
 - **Reciprocal hand-offs** applied in the adjacent skills (§Frontmatter); every §-reference checked to resolve.
 - **Gate integration** — if a meta-gate (`ship`, `writing-ship`) owns a stage the skill implements, the gate's stage list points at it.
 - **The commit message is the design record** — `#add, <name> skill (path) — framing; sections; wiring; README` per `software-engineering` §Documentation; the reasoning lives there, not padded into the skill.

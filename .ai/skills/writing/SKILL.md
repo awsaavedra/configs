@@ -22,10 +22,13 @@ Name the type before applying any rule — the wrong lens is the failure this ta
 **Universal:** Audience · Revision protocol · read-aloud. **Type-bound:** everything else.
 
 ## Thesis — argument · essay · review
+- **Worth writing before worth defending — correct + novel + important.** Name what the reader believes going in that they won't coming out; if nothing changes, it's a consensus summary, not an essay. The one gate a boring thesis fails.
 - One sentence, falsifiable, stated early. Can't write it → you have notes, not a piece.
 - Everything supports the thesis or explicitly earns its digression. Neither → cut.
+- **Pin load-bearing terms before arguing with them.** A term that shifts mid-piece runs a motte-and-bailey on your own reader (argumentation §Bad-Faith-Moves).
 - **Work of ants (Russell), Occam's razor opposing.** Build from stated axioms up, every inferential step on the page; against it, the shortest derivation that keeps its explanatory power. Rigor adds steps, parsimony cuts them; done where neither moves.
 - **Minimum message length.** The product test of that balance — Graham's "uncompressible": remove or replace any part and the argument falls; every summary is lossy. A piece that compresses losslessly was padding around its own summary.
+- **Strongest objection on the page.** Steelman it (argumentation §Steelyman), answer it or concede it — concession is credibility. The objection you skip is the one the reader already thought of; the murder line finds the weak sentence, not the missing rebuttal.
 - Title is a claim or a promise, not a topic label — "How we cut build times 40%", not "Thoughts on builds."
 
 ## Structure
@@ -69,6 +72,7 @@ Name the type before applying any rule — the wrong lens is the failure this ta
 - Every factual claim: cited, personally verified, or explicitly hedged as opinion / experience. Nothing asserted from vibes (`research` owns sourcing).
 - Numbers carry source + context (baseline, denominator, timeframe).
 - Distinguish "I did X and observed Y" (experience — strong) from "X is true generally" (needs evidence).
+- **Abstract claims earn concrete instances** — readers believe examples, not assertions; a claim that can't produce one is a claim to re-examine (§Sentences' concrete-over-abstract at argument level).
 - **Murder line test:** the sentence a hostile reader quotes to dismiss the piece — find it first (argumentation §Steelyman, writing lens).
 
 ## Revision protocol
