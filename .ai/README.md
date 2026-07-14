@@ -49,95 +49,50 @@ Where a tool lacks native support, keep the file in `.ai/` anyway — documents 
 
 **Rule:** All rules must be dual-readable (human + agent) and losslessly compressed to minimum tokens. Authoring + wiring conventions for the skills themselves: [`skill-authoring`](skills/skill-authoring/SKILL.md).
 
-Reusable Socratic / argumentation / diagnostic skills any AI assistant can invoke. Tool-agnostic — drop into `.ai/skills/` or symlink into `.claude/skills/` per the tool mapping above. Each cluster is a single `SKILL.md`.
+**Catalog standards** — binding on every catalog change, agent or human:
 
-**[Argumentation cluster](skills/argumentation/SKILL.md)** — `/argumentation-hygiene`, `/you-sure`, `/steelyman`, `/double-crux`
-- `argumentation-hygiene` — Umbrella rulebook: good-faith principles, bad-faith taxonomy (motte-and-bailey, sealioning, gish gallop, etc.), self-audit checks.
-- `you-sure` — AI self-audits a confident claim. ITT the strongest opposing views, surface assumptions, revise. Triggered by `/you-sure` or pushback ("you sure?", "really?").
-- `steelyman` — Consensual adversarial collaborator for the user's writing/code/plan/design. ITT first, then challenge; hold under pushback. Triggered by `/steelyman` or "tear this apart."
-- `double-crux` — Symmetric productive disagreement. Each side names what evidence would flip their position; locate whether disagreement is shared crux, crux-mismatch, values-level, or empty.
+1. **One sentence per skill** — what it's for; how to invoke. Terse and lossless as a map: routing information may not be dropped, everything else lives in the skill's own `SKILL.md`, never here. The catalog is a map, not a mirror.
+2. **Exclusive lanes, no intra-lane redundancy** — every skill lives in exactly one lane; **Both** only when it genuinely serves Software and Writing alike. No two skills in a lane own the same thing — overlap means a boundary is missing in the skills themselves.
+3. **Everything else is roadmap** — a new skill or lane (math, physics, …) is recorded in [roadmap.md](roadmap.md) *before* drafting; closing a gap lands as one catalog line in its lane, same commit (`skill-authoring` §Wiring).
+4. **Comprehensive or broken** — every skill in [`skills/`](skills/) appears exactly once below; a skill absent from the catalog, or cataloged but deleted, fails audit (`/docs-review`).
 
-**[Diagnostic cluster](skills/diagnostic/SKILL.md)** — `/pre-mortem`, `/five-whys`, `/feynman-test`, `/decision-journal`
-- `pre-mortem` — Assume failure and reverse-engineer why, before committing. Surface failure modes and early-warning signals.
-- `five-whys` — Root-cause drilling after a real incident. Evidence at each level; stop at the deepest actionable cause.
-- `feynman-test` — Comprehension audit by jargon-free explanation. Points where you reach for technical terms are your gaps.
-- `decision-journal` — Log decisions + predictions + confidence for later calibration audit. Practice across time, not in-conversation.
+### Software
 
-**[Delegation ladder](skills/delegation/SKILL.md)** — routes work by scope
-- `delegation-ladder` — Decides whether a task belongs at the architecture, pattern, or code level, then hands it to the right agent or handles it inline. Keeps strategic decisions from leaking into implementation and vice versa.
+- [`software-engineering`](skills/software-engineering/SKILL.md) — Always-on coding principles, auto-engaged whenever code is written: `/design` (clean code) · `/architecture` (seams) · `/cli-devex` (CLI contracts) · `/documentation` (docs–code sync).
+- [`api-design`](skills/api-design/SKILL.md) — Designs a public contract — surface, ergonomics, error semantics, compatibility — before it ships; `/api-design` when shaping exports, endpoints, or config keys.
+- [`testing`](skills/testing/SKILL.md) — Test design, not just running: pyramid, what-to-test, doubles at seams, property-based, characterization; `/testing` when deciding what and how to test.
+- [`debug`](skills/debug/SKILL.md) — Phased root-cause investigation (reproduce → hypothesize → eliminate → fix → verify); `/debug` before proposing any fix for a bug, failure, or regression.
+- [`performance`](skills/performance/SKILL.md) — Proactive budgets, measure-first profiling, benchmark hygiene; `/performance` for optimization work — regressions are `debug`'s lane.
+- [`security`](skills/security/SKILL.md) — Read-only security review emitting tiered findings; `/security [scope]` over code, agents, infra, or threat model.
+- [`code-review`](skills/code-review/SKILL.md) — Audits existing code against the `software-engineering` rules, emitting per-line fixes or PASS; `/review`.
+- [`docs-review`](skills/docs-review/SKILL.md) — Audits the whole docs corpus, ordered currency → coverage → one-authoritative-home → terseness → navigability; `/docs-review`.
+- [`release-engineering`](skills/release-engineering/SKILL.md) — Versions and cuts releases: SemVer, changelog, deprecation policy, breaking-change detection; `/release`.
+- [`governance`](skills/governance/SKILL.md) — License selection, community-health files, and disclosure process for going public; `/governance`.
+- [`ship`](skills/ship/SKILL.md) — Blocking release-readiness gate running this lane's skills (plus `legal` / `privacy`) as ordered stages, emitting GO | NO-GO; `/ship`.
 
-**[Planning](skills/planning/SKILL.md)** — goal decomposition
-- `planning` — Turns an ambiguous goal into a structured plan: definition-of-done at every level, hierarchical breakdown (outcome → milestones → tasks), dependency mapping, riskiest-assumption-first sequencing, prioritization (MoSCoW, RICE / ICE, opportunity cost, an explicit NOT-doing list). Produces the breakdown that `delegation-ladder` routes; pairs with `diagnostic` §Pre-Mortem (stress-test) and §Decision-Journal (log the predictions).
+### Writing
 
-**[Estimation](skills/estimation/SKILL.md)** — sizing & forecasting
-- `estimation` — Calibrated time / cost / effort estimates: name what's asked (estimate ≠ target ≠ commitment), reference class forecasting before inside-view reasoning, planning-fallacy / anchoring / silent-padding guards, P50–P90 ranges over points (sum distributions, not midpoints). Sizes the tasks `planning` produces; every estimate logged as a `diagnostic` §Decision-Journal prediction, calibration feeding the next estimate.
+- [`writing`](skills/writing/SKILL.md) — Type-first prose craft: name the piece's type, apply only the rules that bind it, edit at the contracted depth, preserve the author's voice; `/writing` on anything meant for readers.
+- [`writing-draft`](skills/writing-draft/SKILL.md) — Author-first development loop — the author drafts, the skill answers with angles, expansions, and trims until neither moves; `/writing-draft` from outline to settled draft.
+- [`communication`](skills/communication/SKILL.md) — Short-form decision-seeking writing (PR descriptions, RFCs, status updates, asks): BLUF, one message one ask; `/communication`.
+- [`writing-ship`](skills/writing-ship/SKILL.md) — Blocking type-aware publish gate running this lane's skills (plus `research` / `argumentation` / `diagnostic` / `legal` / `privacy`) as ordered stages, emitting GO | NO-GO; `/writing-ship`.
 
-**[Communication](skills/communication/SKILL.md)** — short-form, decision-seeking
-- `communication` — Writing whose success condition is a decision or an unblock: PR descriptions, RFCs, status updates, asks & escalations. BLUF (ask in the first line), audience-awareness, one message one ask, deadline + default-if-no-response, deltas not activity logs, responding made cheap, decisions promoted out of threads (ADR / `docs/` + `decision-journal`). Distinct from `writing` (long-form craft) and `software-engineering` §Documentation (docs–code sync).
+### Both
 
-**[Software engineering](skills/software-engineering/SKILL.md)** — coding principles cluster
-- `design` — Clean code rules applied automatically: naming, function shape, class design (SRP/DIP), DRY, KISS/YAGNI, fail-fast, smell detection, and the Boy Scout Rule.
-- `architecture` — Seam-first design: depend on interfaces, inject all external dependencies, keep infrastructure out of the logic layer. Lock edge cases before implementation; verify component independence.
-- `cli-devex` — POSIX-compliant, pipeline-friendly CLI rules: stdin/stdout, no interactive prompts, terse/machine-readable output, composable commands, exit codes as contracts.
-- `documentation` — Docs reflect actual implemented state; update atomically with code; exact paths and decisions; no lagging or historical archaeology.
-
-**[API design](skills/api-design/SKILL.md)** — public-API contract design
-- `api-design` — Contracts for libraries / services designed before publication: smallest deliberate surface (every export / endpoint / config key a permanent commitment; default private, one way per behavior, no leaked dependency types), caller-first ergonomics (call site written before implementation; easy to use correctly, hard to misuse; defaults are contract), error semantics as contract (enumerated, machine-readable identity, unambiguous fix-input / retry / give-up split), compatibility by design (Hyrum's law — every observable behavior will be depended on; additive paths, start narrow, pagination + idempotency from day one). `software-engineering` §CLI/DevEx covers the CLI surface; `release-engineering` versions the contract this skill designs — its job is making MAJOR rare.
-
-**[Code review](skills/code-review/SKILL.md)** — explicit review workflow
-- `code-review` — Evaluative process distinct from code generation. Audits Design, Architecture, CLI, and Documentation rules; outputs `[FILE:LINE] RULE — fix: action` or `PASS` per item. Prioritized by correctness → seams → DRY/naming → style.
-
-**[Docs review](skills/docs-review/SKILL.md)** — corpus-level documentation audit
-- `docs-review` — The docs analog of `code-review`: evaluative pass over the whole documentation surface (README, `docs/`, community files, package metadata), ordered currency → coverage → one-authoritative-home → terseness → navigability; target state terse, comprehensive, navigable (any fact ≤2 hops from the README). Audits only surfaces the project *has* — one false predicate (no API on a static site, no CLI in a library) short-circuits that line of analysis with an explicit `N/A`, never a silent skip. Currency rules stay in `software-engineering` §Documentation; [`readme-template.md`](readme-template.md) layout conventions applied as audit criteria, not a scaffold. Owns the `ship` gate's Docs stage. Entry point: `/docs-review`.
-
-**[Ship](skills/ship/SKILL.md)** — release-readiness gate (meta-skill)
-- `ship` — Decides whether a whole project is ready to go public. Runs an ordered, blocking filter — functional → quality → security → docs → governance → privacy → release → publish — delegating each stage to its owning skill (`testing` / `debug`, `code-review`, `security`, `docs-review`, `governance`, `legal`, `privacy`, `release-engineering`), stopping at the first failure, emitting GO | NO-GO. Deterministic entry point: `/ship`.
-
-**[Governance](skills/governance/SKILL.md)** — open-source governance / community health
-- `governance` — License selection, CONTRIBUTING / CODE_OF_CONDUCT / SECURITY.md, coordinated disclosure, issue & PR templates, DCO / CLA, triage. Owns the `ship` gate's governance stage; pairs with `security` for disclosure handling.
-
-**[Legal](skills/legal/SKILL.md)** — open-source protective boilerplate
-- `legal` — The disclaimer / liability / attribution language around a release: AS-IS warranty disclaimer + liability cap (rely on the license's, not your own), when a standalone disclaimer *is* needed, NOTICE / third-party attribution, trademark & endorsement reservation, export / high-risk clauses, and a hard "not legal advice — escalate to counsel" boundary. Feeds the `ship` gate's governance stage; pairs with `governance` (which selects the license).
-
-**[Privacy](skills/privacy/SKILL.md)** — personal-data & identity hygiene
-- `privacy` — The preventive counterpart to `security`'s PII *detection*: decides whether personal data should be published, collected, or retained at all, and by whom. Iron law — never auto-fill a personal identifier (email / name / hostname) from git config, session context, or env into a public artifact; use a role / project contact or ask. Covers PII taxonomy, data minimization, publication permanence (no "rotate" for identity), consent, and where PII hides in a repo. Owns the `ship` gate's Privacy stage; pairs with `security`, `governance` (contacts), `legal` (privacy policy → counsel).
-
-**[Release engineering](skills/release-engineering/SKILL.md)** — versioning & releases
-- `release-engineering` — Semantic Versioning, Keep a Changelog, Conventional Commits → bump mapping, signed tagging, deprecation policy, breaking-change detection. Owns the `ship` gate's release stage.
-
-**[Performance](skills/performance/SKILL.md)** — proactive performance engineering
-- `performance` — Budgets set at design time (percentile targets, never averages), measure-first profiling (no optimization without a measurement; Amdahl caps the win; the second measurement is the deliverable), benchmark hygiene (realistic workloads, warm-up, fixed environment, distributions not single runs, recorded baseline), complexity budgets (Big-O at design time is the one legitimate "premature" concern — know n), guardrails (readability default; optimize only a measured hot path against a violated budget; misses revert; caching earns its keep or goes). `debug` owns the reactive lane (regressions); benchmark results read under `data-analysis` rules.
-
-**[Debug](skills/debug/SKILL.md)** — five-phase bug investigation
-- `debug` — Phased process for bugs, test failures, build failures, performance regressions, memory issues, and concurrency problems. Reproduce → pattern analysis → hypothesize/eliminate → fix at root → verify with fresh evidence. Enforces: no fix without confirmed root cause, no completion claim without verification, eliminate hypotheses rather than confirm them.
-
-**[Testing](skills/testing/SKILL.md)** — test design, not just running
-- `testing` — Test pyramid and what-to-test (behavior over implementation, edge-case enumeration), test doubles at injected seams, property-based testing, characterization tests for legacy code, and test-smell detection. Pairs with `architecture` (seams), `debug` (failing-test-first), and `rules.md` rule 4.
-
-**[Security](skills/security/SKILL.md)** — scoped security review
-- `security` — Evaluative, read-only by default. Scopes: `code` · `agent` · `infra` · `threat-model` · `full`. Outputs tiered findings (HIGH / MEDIUM / LOW / CLEAN) classified against OWASP Top 10:2025, CWE, CVSS v4. Covers language flaw matrices, ASI agent controls (14), STRIDE threat modeling, secrets handling, and compliance mapping (PCI / HIPAA / GDPR / SOC 2 / NIST / ISO).
-
-**[Research](skills/research/SKILL.md)** — multi-source investigation with citations
-- `research` — Decomposes a question into sub-queries, searches across papers/docs/repos, cross-validates claims (2+ sources each), and produces a structured report with inline citations and an explicit gaps section. Inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch).
-
-**[Data analysis](skills/data-analysis/SKILL.md)** — conclusions from numbers
-- `data-analysis` — Hygiene for metrics, benchmarks, experiment results: provenance + sanity checks and plot-before-summarizing before any statistic, named denominators + base rates, distribution over mean (percentiles for anything user-facing), outliers investigated and recorded rather than silently dropped, causal claims gated on confounders / selection bias / Simpson's-paradox subgroup checks, signal-vs-noise guards (regression to the mean, multiple comparisons, practical vs statistical significance). `research` covers what the literature says; this covers what the data says.
-
-**[Writing](skills/writing/SKILL.md)** — prose craft cluster, type-first
-- `writing` — The prose analog of `software-engineering`. Broad → narrow: first name the piece's type (argument / essay, explainer, narrative / memoir, poetry, review) — each has a spine that must hold (falsifiable thesis · teachable outcome · arc + stakes · image + turn · judgment + criteria) and its own binding sections: thesis + claims & evidence for arguments, arc / scene / show-don't-tell for narrative, image / line / turn + a preserve-strangeness editing rule for poetry — over a universal core of audience fit, sentence economy, and a coarse-to-fine revision protocol (structure → paragraph → sentence → read-aloud → cool-down) governed by an edit-depth contract (developmental / line / copyedit / proofread — problems outside the contract flagged, not fixed) and a preserve-the-author's-voice rule (no machine-prose tells; the general-prose form of poetry's preserve-strangeness). Pairs with `argumentation` §Steelyman (adversarial read), `diagnostic` §Feynman-Test (clarity), `research` (sourcing).
-
-**[Writing-draft](skills/writing-draft/SKILL.md)** — author-first draft development loop
-- `writing-draft` — The development loop upstream of `writing`'s editing passes: the human takes the first crack at outline and draft, the skill takes the second — angle generation on the outline (`writing` §Thesis at its cheapest kill point, strongest objection, orderings, venue named), then expansion and trim rounds on a finished draft (expansions proposed as angles the author writes in their own voice; trims applied directly, each citing the rule it enforces), converging when neither moves. Every skill stage opt-in — the author enters wherever the piece is. Never writes the first version of anything: the voice answer is structural, which is how the drafting gap closed without positive voice guidance. Hands off to `writing` §Revision protocol with type + edit depth named.
-
-**[Writing-ship](skills/writing-ship/SKILL.md)** — publish-readiness gate for prose (meta-skill)
-- `writing-ship` — Decides whether a piece (blog post, essay, story, poem, review) is ready to publish. Prose analog of `ship`: names the type, then an ordered, blocking filter — substance → craft → adversarial read → clarity → rights → privacy → mechanics → publish — delegating each stage to its owning skill (`writing`, `research`, `argumentation`, `diagnostic`, `legal`, `privacy`), stages binding per type (adversarial read / clarity report N/A for narrative and poetry rather than silently skipping), stopping at the first failure, emitting GO | NO-GO. Deterministic entry point: `/writing-ship`.
-
-**[Skill authoring](skills/skill-authoring/SKILL.md)** — the suite's own conventions (meta-skill)
-- `skill-authoring` — How a SKILL.md is written and wired in: skill kinds (generative / evaluative / gate / cluster — the kind decides the shape), frontmatter contract (`description` as retrieval surface with triggers; `when_to_use` as boundary ending in a not-for chain, lane hand-offs reciprocal), dual-readable lossless compression (bold rule + why, aphorism over qualifiers, reference never restate, post-draft compression pass), standard blocks (framing line, Output template, Gates, explicit `N/A` grammar), and wiring bookkeeping (catalog + roadmap in the same commit, reciprocal hand-offs, gate integration, commit message as the design record). Codifies what the rule line above and git-history precedent enforced implicitly.
+- [`argumentation`](skills/argumentation/SKILL.md) — Argument hygiene and productive disagreement: `/argumentation-hygiene` (audit an argument), `/you-sure` (self-audit a claim), `/steelyman` (adversarial review), `/double-crux` (locate the real disagreement).
+- [`diagnostic`](skills/diagnostic/SKILL.md) — Failure and comprehension probes: `/pre-mortem` (assume it failed), `/five-whys` (root cause), `/feynman-test` (explain without jargon), `/decision-journal` (log predictions for calibration).
+- [`planning`](skills/planning/SKILL.md) — Decomposes an ambiguous goal into definition-of-done, milestones, dependencies, and a NOT-doing list; `/planning` before routing or estimating work.
+- [`estimation`](skills/estimation/SKILL.md) — Calibrated time / cost / effort ranges — reference class first, P50–P90 over points; `/estimate` before promising dates.
+- [`delegation`](skills/delegation/SKILL.md) — Routes work to the architecture, pattern, or code level before acting; `/delegate` on ambiguously-scoped tasks.
+- [`research`](skills/research/SKILL.md) — Multi-source investigation with cross-validated citations and named gaps; auto-engages on "research" / "compare" / "literature review".
+- [`data-analysis`](skills/data-analysis/SKILL.md) — Hygiene for conclusions drawn from numbers — provenance, distributions, confounders, noise guards; `/data-analysis` on metrics, benchmarks, experiments.
+- [`legal`](skills/legal/SKILL.md) — Protective release boilerplate (AS-IS, liability, NOTICE, trademark) with a hard not-legal-advice boundary; `/legal`.
+- [`privacy`](skills/privacy/SKILL.md) — Decides whether personal data gets published at all; never auto-fill a personal identifier into a public artifact; `/privacy` on anything public-bound.
+- [`skill-authoring`](skills/skill-authoring/SKILL.md) — The suite's own authoring and wiring conventions (kinds, frontmatter, compression, bookkeeping); `/skill-authoring` when adding or revising a skill.
 
 ### Roadmap
 
-Open gaps are tracked by swim lane in [roadmap.md](roadmap.md). The implemented skills cover software engineering at the **code level** (design, architecture, review, debug, testing, [`performance`](skills/performance/SKILL.md) — proactive budgets / profiling / benchmarks), the **public-API surface** ([`api-design`](skills/api-design/SKILL.md) — contracts / error semantics / compatibility by design), the **docs corpus** ([`docs-review`](skills/docs-review/SKILL.md) — coverage / dedup / terseness / navigability audit), **planning & sizing** ([`planning`](skills/planning/SKILL.md) — goal decomposition feeding `delegation-ladder` — sized by [`estimation`](skills/estimation/SKILL.md), predictions logged to `decision-journal`), **short-form communication** ([`communication`](skills/communication/SKILL.md) — PRs / RFCs / status updates, decision-seeking), **numbers** ([`data-analysis`](skills/data-analysis/SKILL.md) — conclusions from data; literature stays with [`research`](skills/research/SKILL.md)), the **release & maintenance** side of going public — the [`ship`](skills/ship/SKILL.md) readiness gate (`/ship`) plus [`governance`](skills/governance/SKILL.md) (community-health authoring), [`privacy`](skills/privacy/SKILL.md) (personal-data hygiene), and [`release-engineering`](skills/release-engineering/SKILL.md) (versioning) for its stages — and **long-form prose**: [`writing`](skills/writing/SKILL.md) (craft) with [`writing-draft`](skills/writing-draft/SKILL.md) (author-first draft development) and [`writing-ship`](skills/writing-ship/SKILL.md) (`/writing-ship` publish gate) — plus the suite's own **authoring conventions** ([`skill-authoring`](skills/skill-authoring/SKILL.md) — frontmatter / compression / wiring). A new candidate skill starts as a gap recorded in [roadmap.md](roadmap.md) *before* drafting (`skill-authoring` §Wiring).
+Open gaps and future lanes (math, physics, …) live in [roadmap.md](roadmap.md) — a candidate skill or lane is recorded there *before* drafting; closing a gap lands as one catalog line in its lane, same commit (`skill-authoring` §Wiring). The lanes above are the coverage map.
 
 **Deferred — writing suite.** Proposed and consciously not in scope yet; recorded so the no is a decision (`planning` §Prioritization):
 - `writing` §Narrative fiction mechanics (POV consistency · tense discipline · dialogue) — only if fiction becomes a real lane beyond memoir / personal essay.
