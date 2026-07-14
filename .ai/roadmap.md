@@ -6,7 +6,6 @@ Open gaps by swim lane. A gap is recorded here *before* its skill is drafted; cl
 
 ## Writing
 
-- **Drafting / generation mode** — the major gap. Every existing rule shapes or verifies a draft that already exists; nothing produces one, so output quality is capped at whatever enters the pipeline. Promoted from README §Deferred ("generation is the author's lane") — that division of labor *was* the gap. Needs: outline → draft workflow · positive voice/register guidance (today's voice rule is preserve-only; a drafting lane without a positive one converges on machine house style) · venue/register fit.
 - **Research-paper structure** — the argument type covers the reasoning, not the form: contribution statement · related-work positioning · methods & limitations disclosure · abstract as the piece's minimum message length. Demote to Deferred if papers don't become a real lane.
 
 ## Software engineering

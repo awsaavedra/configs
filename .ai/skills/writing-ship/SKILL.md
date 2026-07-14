@@ -1,7 +1,7 @@
 ---
 name: writing-ship
 description: Publish-readiness gate for prose — the ordered, delegating, type-aware filter that decides whether a piece (blog post, essay, story, poem, review) is ready to publish. Meta-skill: names the type, runs other skills as stages binding per type, emits GO | NO-GO. Prose analog of ship. Triggers: /writing-ship · "ready to publish" · "publish check" · "is this post ready" · "pre-publish review".
-when_to_use: Publishing a finished piece to a public surface — not drafting or revising (that's `writing`), not a whole software project (that's `ship`). Deterministic entry point: type `/writing-ship`. Delegates to the skills it names per stage (`writing`, `research`, `argumentation`, `diagnostic`, `legal`, `privacy`); port those alongside it.
+when_to_use: Publishing a finished piece to a public surface — not drafting or revising (that's `writing-draft` / `writing`), not a whole software project (that's `ship`). Deterministic entry point: type `/writing-ship`. Delegates to the skills it names per stage (`writing`, `research`, `argumentation`, `diagnostic`, `legal`, `privacy`); port those alongside it.
 ---
 
 # Writing-Ship
