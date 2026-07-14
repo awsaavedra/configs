@@ -37,28 +37,28 @@ Where a tool lacks native support, keep the file in `.ai/` anyway — documents 
 1. `AGENTS.md` — symlink your tool's expected file to it.
 2. `.ai/rules/` — when one rules file gets too long.
 3. `.ai/commands/` — first time you copy-paste the same prompt twice.
-4. `.mcp.json` — when the assistant needs external systems; if you *author* a server in-repo (rather than consume a published one), its code lives in `mcp/<name>/` and `.mcp.json` points at it.
+4. `.mcp.json` — when the assistant needs external systems; in-repo servers per the tree above.
 5. `.ai/hooks/` — when the harness should catch something deterministically.
 6. `.ai/agents/` + `.ai/skills/` — when the main context gets crowded.
 
 ## In this repo
 
-[`rules.md`](rules.md) holds the cross-cutting AI rules (0–7) for every project; [`readme-template.md`](readme-template.md) is the repo-README skeleton plus high-impact rule examples for scaffolding a new project's docs. [`skills/`](skills/) implements the reusable skill clusters cataloged below — drop them into any project's `.ai/skills/` or symlink into `.claude/skills/` per the tool mapping above, or run [`scripts/port.sh`](../scripts/port.sh) to do it in one command. The directory layout above is a **template** — apply per-project as needed.
+[`rules.md`](rules.md) holds the cross-cutting AI rules (0–7) for every project; [`readme-template.md`](readme-template.md) is the repo-README skeleton plus high-impact rule examples for scaffolding a new project's docs. [`skills/`](skills/) implements the skills cataloged below — drop into any project's `.ai/skills/`, symlink into `.claude/skills/` per the tool mapping above, or run [`scripts/port.sh`](../scripts/port.sh). The directory layout above is a **template** — apply per-project as needed.
 
 ## Skills
 
-**Rule:** All rules must be dual-readable (human + agent) and losslessly compressed to minimum tokens. Authoring + wiring conventions for the skills themselves: [`skill-authoring`](skills/skill-authoring/SKILL.md).
+**Rule:** All rules must be dual-readable (human + agent) and losslessly compressed to minimum tokens.
 
 **Catalog standards** — binding on every catalog change, agent or human:
 
-1. **One sentence per skill** — what it's for; how to invoke. Terse and lossless as a map: routing information may not be dropped, everything else lives in the skill's own `SKILL.md`, never here. The catalog is a map, not a mirror.
-2. **Exclusive lanes, no intra-lane redundancy** — every skill lives in exactly one lane; **Both** only when it genuinely serves Software and Writing alike. No two skills in a lane own the same thing — overlap means a boundary is missing in the skills themselves.
+1. **One sentence per skill** — what it's for; how to invoke. Routing information may not be dropped; everything else stays in the skill's `SKILL.md`. The catalog is a map, not a mirror.
+2. **Exclusive lanes, no intra-lane redundancy** — **Both** only when a skill genuinely serves Software and Writing alike; overlap means a boundary is missing in the skills themselves.
 3. **Everything else is roadmap** — a new skill or lane (math, physics, …) is recorded in [roadmap.md](roadmap.md) *before* drafting; closing a gap lands as one catalog line in its lane, same commit (`skill-authoring` §Wiring).
-4. **Comprehensive or broken** — every skill in [`skills/`](skills/) appears exactly once below; a skill absent from the catalog, or cataloged but deleted, fails audit (`/docs-review`).
+4. **Comprehensive or broken** — every skill in [`skills/`](skills/) appears exactly once below (the lanes are the coverage map); drift fails `/docs-review`.
 
 ### Software
 
-- [`software-engineering`](skills/software-engineering/SKILL.md) — Always-on coding principles, auto-engaged whenever code is written: `/design` (clean code) · `/architecture` (seams) · `/cli-devex` (CLI contracts) · `/documentation` (docs–code sync).
+- [`software-engineering`](skills/software-engineering/SKILL.md) — Coding principles auto-engaged whenever code is written: `/design` (clean code) · `/architecture` (seams) · `/cli-devex` (CLI contracts) · `/documentation` (docs–code sync).
 - [`api-design`](skills/api-design/SKILL.md) — Designs a public contract — surface, ergonomics, error semantics, compatibility — before it ships; `/api-design` when shaping exports, endpoints, or config keys.
 - [`testing`](skills/testing/SKILL.md) — Test design, not just running: pyramid, what-to-test, doubles at seams, property-based, characterization; `/testing` when deciding what and how to test.
 - [`debug`](skills/debug/SKILL.md) — Phased root-cause investigation (reproduce → hypothesize → eliminate → fix → verify); `/debug` before proposing any fix for a bug, failure, or regression.
@@ -92,11 +92,4 @@ Where a tool lacks native support, keep the file in `.ai/` anyway — documents 
 
 ### Roadmap
 
-Open gaps and future lanes (math, physics, …) live in [roadmap.md](roadmap.md) — a candidate skill or lane is recorded there *before* drafting; closing a gap lands as one catalog line in its lane, same commit (`skill-authoring` §Wiring). The lanes above are the coverage map.
-
-**Deferred — writing suite.** Proposed and consciously not in scope yet; recorded so the no is a decision (`planning` §Prioritization):
-- `writing` §Narrative fiction mechanics (POV consistency · tense discipline · dialogue) — only if fiction becomes a real lane beyond memoir / personal essay.
-- `writing-ship` audience / venue-fit stage — stage 7 venue rules cover it today; promote to a stage only if venue mismatches start passing the gate.
-- `writing-ship` SEO / discovery checks — optimization ≠ readiness; would live beside the gate, not inside it.
-- `writing-ship` accessibility beyond alt text (heading hierarchy · link text · contrast) — add if pieces grow structurally complex.
-- Announcement / promo copy — [`communication`](skills/communication/SKILL.md)'s lane (writing for action), not a gate stage.
+Open gaps, future lanes, and conscious deferrals: [roadmap.md](roadmap.md) (lifecycle: standard 3 above).
