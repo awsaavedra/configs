@@ -1,12 +1,20 @@
 ---
 name: testing
-description: How to design tests, not just run them. /testing — pyramid, what-to-test, test doubles at seams, property-based testing, characterization tests for legacy code, test smells. Triggers: /testing · "how should I test this" · "what tests do I need" · "is this testable" · "write tests for" · "mock or not" · "test coverage".
+description: How to design tests, not just run them. /testing — TDD cycle, pyramid, what-to-test, equivalence partitioning, boundary value analysis, test doubles at seams, property-based testing, characterization tests for legacy code, test smells. Triggers: /testing · "how should I test this" · "what tests do I need" · "is this testable" · "write tests for" · "mock or not" · "test coverage" · "TDD" · "boundary testing" · "input testing".
 when_to_use: Designing a test suite or deciding what and how to test a change. Pairs with software-engineering §Architecture (seams make code testable), debug (the failing-test-first gate), code-review (test currency), and rules.md rule 4. Not for chasing a specific failure — use debug.
 ---
 
 # Testing
 
 Tests exist to let you change code without fear. Design for that, not for a coverage number.
+
+## TDD
+Red → Green → Refactor, one cycle per behavior.
+- **Red:** Smallest test that fails for the missing behavior. Compile errors count as red. Don't write more test than needed to fail.
+- **Green:** Minimum code to pass — ugly is fine here.
+- **Refactor:** Clean under green. No new behavior; no new tests during this step.
+- Tests written first force seams (§Architecture) into existence before they're needed in production code.
+- **Spike first** when the problem domain is unknown: write throwaway exploratory code (untested), then TDD the real impl. Delete the spike.
 
 ## Pyramid
 Many fast unit · fewer integration · few end-to-end. Push each assertion to the lowest level that can hold it. Inverted (mostly E2E) = slow, flaky, vague failures.
@@ -22,6 +30,18 @@ Many fast unit · fewer integration · few end-to-end. Push each assertion to th
 - **Edge cases first.** empty · boundary (0/1/n, off-by-one) · null/absent · duplicate · overflow · concurrent · failure of each injected dependency. Lock these per §Architecture before coding.
 - **One reason to fail per test.** Name states the behavior. Arrange–Act–Assert; one logical assertion.
 - **Skip:** trivial getters · framework/library code · the language itself. Coverage is a floor signal, not a target — 100% of trivial ≠ tested.
+
+## Input testing
+**Equivalence partitioning:** Divide inputs into classes where behavior is identical; one representative test per class.
+- Typical classes: valid range · too-low · too-high · empty · null · wrong type. One test each — not every value in the class.
+
+**Boundary value analysis:** At each partition boundary test just-below · exact boundary · just-above.
+- Off-by-one errors live at the fence, not in the field. Mid-range values never catch them.
+- Common boundaries: 0/1/n · empty collection · max length · type extremes (INT_MAX, 0.0) · single-element list.
+
+**State transitions:** For stateful code, test every valid transition, every invalid transition, and every state that must remain stable when an invalid transition is attempted.
+
+**Adversarial inputs** (system boundaries only): null · empty string · max-length · wrong encoding · negative-where-positive expected · injection strings. Validate at the seam (`software-engineering §Architecture` — Fail fast); test that seam, not the internals.
 
 ## Test doubles (at seams)
 Injected dependencies (§Architecture) are where doubles plug in.
@@ -44,7 +64,8 @@ No seam yet → add the minimum one (sprout new code in a function/class, or wra
 slow suite (real I/O in unit tests) · flaky (timing/order/shared state — a real bug; see debug §Flaky) · fragile (asserts internals or mocks owned code) · obscure (no clear Act) · conditional logic in a test · order-coupled tests · assertion roulette (many asserts, unclear which failed) · testing the mock instead of the code.
 
 ## Gates
-- New behavior ships with a test that fails without it (rules.md rule 4 · debug Phase 4).
-- Bug fix ships with a regression test that reproduces it first.
+- New behavior ships with a test that fails without it — written before the implementation (TDD §Red; rules.md rule 4 · debug Phase 4).
+- Bug fix ships with a regression test that reproduces the bug first.
+- Every input class and boundary identified before coding (§Input testing · §What to test edge cases).
 - Tests read as spec: a reader learns what the unit does from the names.
 - Suite is deterministic and fast enough to run on every change.
