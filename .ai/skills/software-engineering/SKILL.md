@@ -33,6 +33,7 @@ Build seams — places where behavior can be swapped without editing the caller 
 - **Treat every hard dependency as a logged decision.** Ask: *what would it cost to replace this?* High cost → add a seam.
 - **Lock edge cases and state transitions before implementation.** Undefined boundary behavior is harder to fix after code exists.
 - **Verify component independence.** Each component testable and deployable without its neighbors.
+- **Persist the structure once it outgrows your head.** Multiple bounded contexts, or seams a newcomer can't infer from the code → a durable `docs/architecture.md` (component map · boundaries · data flow · structural ADRs), not tribal knowledge (rules.md rule 8). Keep it current or delete it — stale misleads worse than absent.
 - **Seams pay off:** independent testability · vendor swappability · service extraction. Without them, dependencies become load-bearing walls.
 
 ---
