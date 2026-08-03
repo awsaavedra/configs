@@ -40,14 +40,15 @@ UNCHANGED=0
 
 # ---- catalogs --------------------------------------------------------------
 
-CONFIG_ALL="vim tmux bash"
+CONFIG_ALL="vim tmux herdr bash"
 # config name -> repo-relative source paths (one per line)
 config_paths() {
     case "$1" in
-        vim)  printf '%s\n' ".vimrc" ;;
-        tmux) printf '%s\n' ".tmux.conf" ".config/tmux/themes/tokyonight_moon.tmux" ".config/tmux/pane-color.sh" ;;
-        bash) printf '%s\n' ".bashrc" ".bash_profile" ;;
-        *)    return 1 ;;
+        vim)   printf '%s\n' ".vimrc" ;;
+        tmux)  printf '%s\n' ".tmux.conf" ".config/tmux/themes/tokyonight_moon.tmux" ".config/tmux/pane-color.sh" ;;
+        herdr) printf '%s\n' ".config/herdr/config.toml" ;;
+        bash)  printf '%s\n' ".bashrc" ".bash_profile" ;;
+        *)     return 1 ;;
     esac
 }
 
@@ -79,7 +80,7 @@ ports all skills + rules.md, mapping to the AI tool detected in TARGET_DIR.
 
 Categories (combine freely; value is `all` or a comma list):
   --skills VALUE   AI skill clusters into the target's skills dir (+ rules).
-  --config VALUE   Dotfiles: vim, tmux, bash.
+  --config VALUE   Dotfiles: vim, tmux, herdr, bash.
   --tools  VALUE   Generate scripts/install-tools.sh for: fzf, ripgrep, fd, bat,
                    jq, tree, htop, tmux, vim, git, curl.
   --no-rules       With --skills, skip rules.md / context-file wiring.

@@ -1,0 +1,59 @@
+# herdr configuration — keybindings ported from ~/.config/tmux/tmux.conf
+#
+# Scope: ONLY keybindings were migrated (per request). Behavioral options,
+# the rotating pane-color hooks, the status bar, and the Eisenhower layout
+# were intentionally left out.
+#
+# Where a tmux key collided with a herdr built-in default, herdr's default was
+# kept rather than reshuffled. Those cases are listed at the bottom and in the
+# herdr section of this configs repo's README.md.
+
+[keys]
+# tmux: set-option -g prefix C-a
+# (secondary prefix C-Space has no herdr equivalent — herdr has a single prefix)
+prefix = "ctrl+a"
+
+# --- Pane focus — tmux: bind -n C-h/j/k/l select-pane ---
+# Direct (no prefix), mirroring your vim-style navigation.
+# Note: ctrl+h and ctrl+l double as backspace / clear-screen in some shells;
+# you already accept this in your tmux setup.
+focus_pane_left  = "ctrl+h"
+focus_pane_down  = "ctrl+j"
+focus_pane_up    = "ctrl+k"
+focus_pane_right = "ctrl+l"
+
+# --- Splits — tmux: bind | split -h  /  bind - split -v ---
+# You kept the symbol keys; v and h are dropped.
+# herdr: split_vertical = pane to the right, split_horizontal = pane below.
+split_vertical   = "prefix+|"      # | -> side-by-side
+split_horizontal = "prefix+minus"  # - -> stacked (also herdr's default)
+
+# --- Pane — tmux: bind x kill-pane ---
+close_pane = "prefix+x"            # identical to herdr's default
+
+# --- Tabs (tmux windows) — tmux: bind -n M-Left/M-Right select-window -/+ ---
+previous_tab = "alt+left"
+next_tab     = "alt+right"
+
+# --- Workspaces (tmux sessions) ---
+new_workspace      = "prefix+shift+c"  # tmux: bind C new-session
+close_workspace    = "prefix+shift+k"  # tmux: bind K kill-session
+previous_workspace = "alt+up"          # tmux: bind -n M-Up   switch-client -p
+next_workspace     = "alt+down"        # tmux: bind -n M-Down switch-client -n
+
+# tmux: bind -n M-1..9 select-window -t N  ->  alt+1..9 switches tabs directly
+[keys.indexed]
+tabs = "alt"
+
+# --- Left at herdr defaults (your tmux key collided with a herdr built-in) ---
+#   reload config      herdr: prefix+shift+r   (tmux q — note: prefix+q is DETACH in herdr)
+#   rename tab/window  herdr: prefix+shift+t   (tmux r — note: prefix+r is RESIZE MODE)
+#   rename pane        herdr: prefix+shift+p   (tmux T)
+#   kill tab/window    herdr: prefix+shift+x   (tmux k)
+#   rename session     herdr: prefix+shift+w   (tmux R — prefix+shift+r is RELOAD)
+#   new tab            herdr: prefix+c         (you had tmux 'c' unbound; kept herdr default)
+#   resize panes       herdr: prefix+r -> then arrows/hjkl  (tmux used C-M-S-arrows)
+#
+# --- Not ported (no herdr equivalent) ---
+#   vi copy-mode v/y, swap-window (M-S-arrows), Eisenhower layout (bind E),
+#   C-M-arrow pane focus (duplicate of ctrl+h/j/k/l), secondary prefix C-Space.

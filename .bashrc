@@ -158,6 +158,17 @@ vr() {
 }
 vg() { vr "$@"; }
 
+# herdr: run monolithic by default so closing the terminal kills all local
+# panes/agents (no persistent background server). Explicit subcommands and
+# flags (session/server/status/--remote/--session/etc.) pass through unchanged.
+herdr() {
+  if [ "$#" -eq 0 ]; then
+    command herdr --no-session
+  else
+    command herdr "$@"
+  fi
+}
+
 # --------------------------------------------------
 # Tool-chain sourcing (installed by setup.sh)
 # --------------------------------------------------

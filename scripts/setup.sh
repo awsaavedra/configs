@@ -171,6 +171,15 @@ if [ -f "$REPO_DIR/.config/tmux/themes/tokyonight_moon.tmux" ]; then
     echo "  Installed .config/tmux/themes/tokyonight_moon.tmux"
 fi
 
+# herdr keybindings (tmux-like workspace manager for AI agents); the herdr()
+# monolithic-mode wrapper ships in .bashrc. Only config.toml is tracked —
+# session.json / logs / state dirs are runtime data and stay local.
+if [ -f "$REPO_DIR/.config/herdr/config.toml" ]; then
+    mkdir -p "$HOME/.config/herdr"
+    cp "$REPO_DIR/.config/herdr/config.toml" "$HOME/.config/herdr/config.toml"
+    echo "  Installed .config/herdr/config.toml"
+fi
+
 # Claude Code personal dotfiles — source: tracked claude/ ; target: ~/.claude/
 # (the live ~/.claude working dir is gitignored in this repo; only these
 #  deliberate config files are version-controlled, under claude/.)

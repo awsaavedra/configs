@@ -38,9 +38,12 @@ configs/
 │   ├── vm-linux-script-minify.sh  # zero/compress a VM image before export
 │   └── requirements.txt       # Python packages installed by setup
 ├── claude/                    # Claude Code dotfile sources (settings + statusline) → ~/.claude/
-├── .bashrc / .bash_profile    # interactive + login shell — aliases, vf/vr, git-branch prompt, PATH
+├── .config/                   # XDG config, mirrored into ~/.config/
+│   ├── tmux/                  #   TokyoNight Moon theme + rotating pane-color script
+│   └── herdr/                 #   herdr keybindings (tmux-like terminal workspace manager for AI agents)
+├── .bashrc / .bash_profile    # interactive + login shell — aliases, vf/vr, herdr wrapper, git-branch prompt, PATH
 ├── .vimrc                     # vim config
-├── .tmux.conf / .config/tmux/ # tmux config + TokyoNight Moon theme + pane colors + Eisenhower layout
+├── .tmux.conf                 # tmux config (prefix C-a, splits, Eisenhower layout)
 ├── AGENTS.md                  # session context for any AI agent (CLAUDE.md is a gitignored local pointer)
 └── TODO-tools.md              # backlog of CLI tools to evaluate (not installed by the bootstrap)
 ```
@@ -86,7 +89,7 @@ Pluck-as-needed · tool-agnostic (the AI layer maps onto Claude Code / Cursor / 
 3. Adds the current user to the `docker` group.
 4. Installs SDKMAN, then Java 17 and Kotlin via `sdk install`.
 5. Installs Python packages from `requirements.txt` via `pip3 --user` (numpy/pandas/matplotlib, PyTorch, HuggingFace Transformers, LlamaIndex stack, Jupyter, Flask, pytest).
-6. Copies dotfiles (`.bashrc`, `.bash_profile`, `.vimrc`, `.tmux.conf`, tmux theme, Claude Code config) into `$HOME`.
+6. Copies dotfiles (`.bashrc`, `.bash_profile`, `.vimrc`, `.tmux.conf`, tmux theme, herdr keybindings, Claude Code config) into `$HOME`.
 
 `.bashrc` auto-runs `setup.sh` on first interactive login when `~/.setup-complete` is absent.
 
@@ -94,8 +97,9 @@ Pluck-as-needed · tool-agnostic (the AI layer maps onto Claude Code / Cursor / 
 
 | File | Purpose |
 |---|---|
-| `.bashrc` | Interactive shell — history, aliases, `vf`/`vr` functions, SDKMAN, PATH |
+| `.bashrc` | Interactive shell — history, aliases, `vf`/`vr` functions, `herdr` wrapper, SDKMAN, PATH |
 | `.bash_profile` | Login shell — sources `.bashrc`, sets colored `user @ dir (git-branch)` prompt |
+| `.config/herdr/config.toml` | herdr keybindings, ported from the tmux config (deployed to `~/.config/herdr/`) |
 | `claude/settings.json` | Claude Code — dark theme, custom status line (deployed to `~/.claude/`) |
 | `claude/statusline-command.sh` | Status line: `(git-branch) \| model \| ctx%` |
 
@@ -115,7 +119,7 @@ One command to port **only what you need** into another project — skills, dotf
 Categories combine freely; each value is `all` or a comma list:
 
 - `--skills debug,security` — selected skill clusters (plus `rules.md` unless `--no-rules`).
-- `--config vim,tmux,bash` — dotfiles copied into the target at the same relative paths.
+- `--config vim,tmux,herdr,bash` — dotfiles copied into the target at the same relative paths.
 - `--tools fzf,ripgrep,fd,bat,jq,…` — generates `scripts/install-tools.sh` in the target (apt + brew, with the Debian `batcat`/`fdfind` shims).
 
 Idempotent — re-run to re-sync; reports `created`/`updated`/`unchanged` per file and never duplicates the rules block. Other flags: `--tool` forces a layout, `--dry-run` previews, `-q` quiets. Exit codes: 0 ok · 1 usage · 2 target missing · 3 source missing.
@@ -134,6 +138,27 @@ Config: `.tmux.conf` + `.config/tmux/`. **Prefix:** `C-a` (remapped from `C-b`).
 | `C-h/j/k/l` | Navigate panes (no prefix) |
 
 **Theme:** TokyoNight Moon (`.config/tmux/themes/tokyonight_moon.tmux`). **Pane colors:** `.config/tmux/pane-color.sh` assigns a rotating dark hue per pane ID (Eisenhower windows manage their own). **Eisenhower Matrix** (`C-a E`): a 2×2 tiled window — Do (green), Decide (blue), Delegate (rose), Delete (grey).
+
+### herdr
+
+[herdr](https://viniciusrocha.com/posts/herdr-cheat-sheet/) is a tmux-like terminal workspace manager built for AI coding agents (`workspace ≈ tmux session`, `tab ≈ tmux window`, `pane ≈ tmux pane`). Fully independent of tmux — it never touches `~/.config/tmux/`; to go back, just run `tmux`. Config: `.config/herdr/config.toml` (only the keybindings are ported from the tmux setup; the pane-color hooks, status bar, and Eisenhower layout are intentionally left out). Validate with `herdr config check`; apply to a running server with `herdr server reload-config`.
+
+**Monolithic by default.** The `herdr()` wrapper in `.bashrc` launches a bare `herdr` with `--no-session`, so closing the terminal tears down every local pane/agent instead of leaving a persistent background server. Explicit subcommands and flags (`session`/`server`/`status`/`--remote`/`--session`) pass through unchanged; use `command herdr` to opt into the persistent server for one launch.
+
+**Prefix:** `ctrl+a` (same as tmux). In-app help: `prefix+?`.
+
+| Binding | Action | tmux origin |
+|---|---|---|
+| `ctrl+h/j/k/l` | Focus pane left/down/up/right (no prefix) | `bind -n C-h/j/k/l` |
+| `prefix+\|` | Split side-by-side | `bind \| split -h` |
+| `prefix+-` | Split stacked | `bind - split -v` |
+| `prefix+x` | Close pane | `bind x kill-pane` |
+| `alt+left/right` | Prev / next tab | `M-Left` / `M-Right` |
+| `alt+1`…`alt+9` | Jump to tab N | `M-1`…`M-9` |
+| `prefix+shift+c` | New workspace | `bind C new-session` |
+| `alt+up/down` | Prev / next workspace | `M-Up` / `M-Down` |
+
+Where a tmux key collided with a herdr built-in, herdr's default was kept — notably `prefix+shift+r` reloads config (herdr's `prefix+q` = detach) and `prefix+r` = resize mode. Not ported (no herdr equivalent): vi copy-mode, swap-window, the Eisenhower layout, the secondary `C-Space` prefix.
 
 ### Vim
 
