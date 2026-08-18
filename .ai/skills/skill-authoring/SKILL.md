@@ -1,7 +1,7 @@
 ---
 name: skill-authoring
 description: Meta-skill — how a SKILL.md in this suite is written and wired in. Skill kinds (generative / evaluative / gate / cluster — the kind decides the shape), frontmatter contract (description = retrieval surface with triggers; when_to_use = boundary ending in a not-for chain), dual-readable lossless compression (bold rule + why, aphorism over qualifiers, reference never restate, post-draft compression pass), standard blocks (framing line, Output template, Gates, explicit N/A grammar), wiring bookkeeping (catalog + roadmap in the same commit, reciprocal hand-offs, gate integration). Triggers: /skill-authoring · "add a skill" · "write a SKILL.md" · "wire in a new skill" · "audit the catalog".
-when_to_use: Creating or revising a skill in this suite, or auditing catalog / roadmap / hand-off consistency. Owns the conventions, not the content — the skill's domain expertise is its own problem. Not auditing a docs corpus (docs-review), not prose craft (writing), not always-on cross-project constraints (rules.md — binds every session; skills are on-demand capability).
+when_to_use: Creating or revising a skill in this suite, or auditing catalog / roadmap / hand-off consistency. Owns the conventions, not the content — the skill's domain expertise is its own problem. Not auditing a docs corpus (docs-review), not measuring whether a skill works once written (skill-evals), not prose craft (writing), not always-on cross-project constraints (rules.md — binds every session; skills are on-demand capability).
 ---
 
 # Skill Authoring

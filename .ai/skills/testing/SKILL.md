@@ -1,7 +1,7 @@
 ---
 name: testing
 description: How to design tests, not just run them. /testing — TDD cycle, pyramid, what-to-test, equivalence partitioning, boundary value analysis, test doubles at seams, property-based testing, characterization tests for legacy code, test smells. Triggers: /testing · "how should I test this" · "what tests do I need" · "is this testable" · "write tests for" · "mock or not" · "test coverage" · "TDD" · "boundary testing" · "input testing".
-when_to_use: Designing a test suite or deciding what and how to test a change. Pairs with software-engineering §Architecture (seams make code testable), debug (the failing-test-first gate), code-review (test currency), and rules.md rule 4. Not for chasing a specific failure — use debug.
+when_to_use: Designing a test suite or deciding what and how to test a change. Pairs with software-engineering §Architecture (seams make code testable), debug (the failing-test-first gate), code-review (test currency), and rules.md rule 4. Not for chasing a specific failure — use debug; not for evaluating whether an agent skill works — use skill-evals.
 ---
 
 # Testing

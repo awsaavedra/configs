@@ -89,6 +89,7 @@ Where a tool lacks native support, keep the file in `.ai/` anyway — documents 
 - [`legal`](skills/legal/SKILL.md) — Protective release boilerplate (AS-IS, liability, NOTICE, trademark) with a hard not-legal-advice boundary; `/legal`.
 - [`privacy`](skills/privacy/SKILL.md) — Decides whether personal data gets published at all; never auto-fill a personal identifier into a public artifact; `/privacy` on anything public-bound.
 - [`skill-authoring`](skills/skill-authoring/SKILL.md) — The suite's own authoring and wiring conventions (kinds, frontmatter, compression, bookkeeping); `/skill-authoring` when adding or revising a skill.
+- [`skill-evals`](skills/skill-evals/SKILL.md) — Designing and maintaining evals for agent skills — capability/preference lifecycle, the two-file harness, regex-first + LLM-judge checks, trigger-boundary cases, ablation and retirement, the merge gate; `/skill-evals` before shipping a skill and on every change after.
 
 ### Roadmap
 
