@@ -6,14 +6,14 @@ when_to_use: Building, reviewing, or maintaining evals for an agent skill (SKILL
 
 # Skill Evals
 
-Ship a skill, ship its evals. Agents are non-deterministic, so a bare failure is unattributable — bad skill, or hard task? Evals make the skill's effect measurable. This owns measuring skills; `skill-authoring` owns writing them, `testing` owns application-code tests.
+Ship a skill, ship its evals. Agents are non-deterministic, so a bare failure is unattributable — bad skill, or hard task? This owns measuring skills; `skill-authoring` owns writing them, `testing` owns application-code tests.
 
 ## What sets the eval strategy
 - **Capability vs preference skill** — capability skills teach what the model can't do yet: *temporary*, so the eval is a retirement clock (§Ablation & retirement). Preference skills encode team workflow / style / domain: *durable*, so the eval is a regression guard against model updates.
 - **Model-invoked vs user-invoked** — user-invoked, you see a miss live and reprompt. Model-invoked (every customer-facing skill) fails silently, so eval the *trigger*, not just the output.
 
 ## Harness — start with two files
-- **Case file** (JSON/YAML) — per case: `prompt · language · should_trigger · expected checks`. 10–20 cases beat zero; seed from real production traces, not just imagination.
+- **Case file** (JSON/YAML) — per case: `prompt · language · should_trigger · expected checks`. 10–20 cases beat zero; seed from real production traces.
 - **Runner** — a small script runs the agent in a **clean workspace** (plus any startup commands to install deps) and captures the trace + output. Isolation is load-bearing: agents cheat by reusing prior chats and executions, passing without the skill.
 - **Regex-first** — most checks are cheap asserts over the output/trace: right SDK · right model ID · right methods · no stale patterns · did the skill fire. No LLM, cheap to re-run, one-line bump when a new model ships.
 - **LLM-as-judge** — only where a rubric is too fuzzy for regex (trace-level quality): rubric → pass/fail → read the fails → fix the skill.
@@ -29,7 +29,7 @@ Ship a skill, ship its evals. Agents are non-deterministic, so a bare failure is
 - **Always ablate** — run every eval with the skill and without it; only the gap proves the skill earns its per-call tokens.
 - **Retire on a closed gap** — when the model passes without the skill, retire it and reclaim the token cost; capability skills expire faster than you expect.
 - **Keep the eval after the skill** — it becomes a standing regression guard; reintroduce the skill if a later model degrades.
-- **No-ops** — instructions that don't change behavior ("write clear code") cost tokens on every load; ablation catches them (removing one shouldn't move the score). The authoring-side fix lives in `skill-authoring`.
+- **No-ops** — ablation is how you *detect* dead instructions: dropping one shouldn't move the score. What a no-op is and how to cut it lives in `skill-authoring §Compression`.
 
 ## Output
 ```

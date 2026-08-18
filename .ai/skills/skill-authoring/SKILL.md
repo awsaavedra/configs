@@ -27,6 +27,7 @@ Name the kind first — it decides the shape.
 - **Aphorism over qualifiers** — one memorable line ("a benchmark that moves with the weather measures the weather") outlives three hedged sentences; compress the reasoning into the image.
 - **Reference, never restate** — one authoritative home per rule across the suite; others cite `skill` §Section (multi-word sections hyphenated: §Decision-Journal; loose partials tolerated: §Breaking). Restating forks the rule.
 - **The compression pass** — after drafting and on every revisit, re-read hunting restatements: a clause repeating its own bold lead · a bullet restating a table row · a rule another skill owns. A cut is lossless only if the rule, its why, and its example survive; a cut that loses the why saves tokens and drops the argument.
+- **No-ops earn nothing** — an instruction telling the model to do what it already does ("write clear code", "make it readable") changes no behavior and costs tokens on every load; cut it. `skill-evals` catches survivors by ablation (dropping one shouldn't move the eval score).
 - Broad → narrow; `##` per concern; ~50–60 lines total — past that, it's probably two skills.
 
 ## Structure
