@@ -27,6 +27,7 @@ From the 2026-07-19 audit after adding §TDD and §Input testing to the `testing
 ## Both
 
 - **Task-state home** — `planning` produces breakdowns, `estimation` sizes them, `diagnostic` §Decision-Journal logs predictions, but nothing owns in-flight, cross-session task state (started / blocked / abandoned) for arbitrary projects; this roadmap is that artifact for the suite only. Candidate: a task-ledger convention or skill.
+- **LLM-as-judge / rubric design** (2026-08-17) — `skill-evals` reaches for an LLM judge (§Harness) but doesn't own building one: rubric design, calibration against human labels, judge bias (position / verbosity / self-preference), and judge-the-judge agreement checks. A distinct discipline serving `skill-evals`, `data-analysis`, and `writing-ship` — hence Both; promote to a standalone skill once it grows its own trigger vocabulary (`skill-authoring` §Kinds).
 
 ## Suite (meta)
 
@@ -39,6 +40,7 @@ Gaps in the suite's own machinery, from a 2026-07-14 flow review:
 ## Future lanes
 
 - **Math**, **Physics** — planned; a lane opens by recording its first concrete gap here.
+- **AI engineering** — `skill-authoring` + `skill-evals` are its seeds (filed under Both for now); opens as its own lane once a first concrete gap lands — candidates: prompt / context engineering, agent & tool-use design, retrieval / RAG evaluation.
 
 ## Deferred — testing
 
